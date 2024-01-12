@@ -1,7 +1,7 @@
 export type Empleado = {
+  dni: string;
   nombre: string;
   apellido: string;
-  dni: string;
   isCamionero: boolean
 }
 

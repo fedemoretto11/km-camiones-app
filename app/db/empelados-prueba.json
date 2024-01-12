@@ -1,0 +1,26 @@
+[
+  {
+    "dni": "38437001",
+    "nombre": "Federico",
+    "apellido": "Moretto",
+    "isCamionero": false 
+  },
+  {
+    "dni": "38437123",
+    "nombre": "Ramon",
+    "apellido": "Alvarez",
+    "isCamionero": true 
+  },
+  {
+    "dni": "40765312",
+    "nombre": "Francesco",
+    "apellido": "Denuncio",
+    "isCamionero": false 
+  },
+  {
+    "dni": "8765123",
+    "nombre": "Stefano",
+    "apellido": "De La Serna",
+    "isCamionero": true 
+  }
+]
