@@ -7,7 +7,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <div className="w-full flex-none md:w-64">
         <Sidebar />
       </div>
-      <div className="flew-grow p-6 md:overflow-y-auto md:p-12">{children}</div>
+      <div className="flew-grow p-6 md:overflow-y-auto md:p-12">
+        {children}
+      </div>
     </div>
   )
 }

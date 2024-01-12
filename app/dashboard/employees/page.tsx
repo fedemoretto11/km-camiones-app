@@ -1,6 +1,6 @@
 import Search from "@/app/ui/Search";
-import AddEmployee from "@/app/ui/buttons";
 import Table from "@/app/ui/employee/Table";
+import { AddEmployee } from "@/app/ui/employee/buttons";
 
 export default function Page() {
 

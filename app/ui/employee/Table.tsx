@@ -1,4 +1,5 @@
 import rawData from '@/app/db/empelados-prueba.json'
+import { DeleteEmployee, EditEmployee } from './buttons'
 
 export default function Table() {
 
@@ -40,8 +41,8 @@ return (
                   <td className='text-center whitespace-nowrap px-3 py-3'>{employee.isCamionero ? 'SI' : 'NO'}</td>
                   <td className='whitespace-nowrap px-7 py-3'>
                     <div className='flex justify-end gap-3'>
-                      <p>U</p>
-                      <p>D</p>
+                      <EditEmployee dni='38437001'/>
+                      <DeleteEmployee dni='38437001'/>
                     </div>
                   </td>
                 </tr>
