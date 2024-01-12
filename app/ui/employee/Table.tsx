@@ -20,7 +20,7 @@ return (
               <th scope="col" className="px-6 py-5 font-medium">
                 Apellido
               </th>
-              <th scope="col" className="px-6 py-5 font-medium">
+              <th scope="col" className="px-2 py-5 font-medium">
                 En camioneros
               </th>
               <th scope="col" className="px-6 py-5 font-medium">
@@ -28,7 +28,7 @@ return (
               </th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className='bg-white'>
             {
               rawData?.map((employee) => (
                 <tr
@@ -38,7 +38,7 @@ return (
                   <td className='whitespace-nowrap py-3 pl-6 pr-6'>{employee.dni}</td>
                   <td className='whitespace-nowrap px-7 py-3'>{employee.nombre}</td>
                   <td className='whitespace-nowrap px-7 py-3'>{employee.apellido}</td>
-                  <td className='text-center whitespace-nowrap px-3 py-3'>{employee.isCamionero ? 'SI' : 'NO'}</td>
+                  <td className='whitespace-nowrap px-3 py-3'>{employee.isCamionero ? 'SI' : 'NO'}</td>
                   <td className='whitespace-nowrap px-7 py-3'>
                     <div className='flex justify-end gap-3'>
                       <EditEmployee dni='38437001'/>
