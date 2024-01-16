@@ -7,6 +7,7 @@ export type Empleado = {
 
 export type Vehiculo = {
   patente: string;
+  reparto: string;
   marca: string;
   modelo: string;
   kmTotales: number;

@@ -12,6 +12,9 @@ return (
           <thead className="rounded-lg text-left text-sm font-normal">
             <tr>
               <th scope="col" className="px-6 py-5 font-medium">
+                Reparto
+              </th>
+              <th scope="col" className="px-6 py-5 font-medium">
                 Patente
               </th>
               <th scope="col" className="px-6 py-5 font-medium">
@@ -35,7 +38,8 @@ return (
                   key={vehicle.patente}
                   className='w-full border-b py-3 text-sm last-of-type:border-none bg-white [&:first-child>td:first-child]:rounded-tl-lg [&:first-child>td:last-child]:rounded-tr-lg [&:last-child>td:first-child]:rounded-bl-lg [&:last-child>td:last-child]:rounded-br-lg'
                 >
-                  <td className='whitespace-nowrap py-3 pl-6 pr-6'>{vehicle.patente}</td>
+                  <td className='whitespace-nowrap py-3 pl-6 pr-6'>{vehicle.reparto}</td>
+                  <td className='whitespace-nowrap px-7 py-3'>{vehicle.patente}</td>
                   <td className='whitespace-nowrap px-7 py-3'>{vehicle.marca}</td>
                   <td className='whitespace-nowrap px-7 py-3'>{vehicle.modelo}</td>
                   <td className='text-center whitespace-nowrap px-3 py-3'>{vehicle.kmTotales}</td>

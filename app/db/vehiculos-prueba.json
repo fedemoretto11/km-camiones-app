@@ -1,26 +1,37 @@
 [
   {
+    "reparto": "Dolores",
     "patente": "JRZ560",
     "marca": "Iveco",
     "modelo": "Daily",
     "kmTotales": 570921
   },
   {
+    "reparto": "Maipu",
     "patente": "AE187BO",
     "marca": "Iveco",
     "modelo": "Daily",
     "kmTotales": 147514
   },
   {
+    "reparto": "Helados",
     "patente": "PGA899",
     "marca": "Iveco",
     "modelo": "Daily",
     "kmTotales": 379377
   },
   {
+    "reparto": "Alternativo",
     "patente": "AE269GM",
     "marca": "Ford",
     "modelo": "Ranger",
     "kmTotales": 33677
+  },
+  {
+    "reparto": "Alternativo 2",
+    "patente": "SFP854",
+    "marca": "Jeep",
+    "modelo": "Gladiator",
+    "kmTotales": 9999999
   }
 ]
