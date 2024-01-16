@@ -3,6 +3,7 @@ import Table from "@/app/ui/employee/Table";
 
 import rawData from '@/app/db/vehiculos-prueba.json'
 import { AddVehicle } from "@/app/ui/buttons";
+import TableVehicle from "@/app/ui/vehicles/TableVehicle";
 
 const HEADERS = ["DNI", "Nombre", "Apellido", "En camioneros"]
 
@@ -20,6 +21,7 @@ export default function Page() {
         <Search placeholder="Buscar vehiculo"/>
         <AddVehicle />
       </div>
+      <TableVehicle />
     </section>
     )
 }

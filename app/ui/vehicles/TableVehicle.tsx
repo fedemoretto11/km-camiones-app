@@ -1,7 +1,7 @@
-import rawData from '@/app/db/empelados-prueba.json'
-import { DeleteEmployee, EditEmployee } from '../buttons'
+import rawData from '@/app/db/vehiculos-prueba.json'
+import { DeleteVehicle, EditVehicle } from '../buttons'
 
-export default function Table() {
+export default function TableVehicle() {
 
 
 return (
@@ -12,16 +12,16 @@ return (
           <thead className="rounded-lg text-left text-sm font-normal">
             <tr>
               <th scope="col" className="px-6 py-5 font-medium">
-                DNI
+                Patente
               </th>
               <th scope="col" className="px-6 py-5 font-medium">
-                Nombre
+                Marca
               </th>
               <th scope="col" className="px-6 py-5 font-medium">
-                Apellido
+                Modelo
               </th>
               <th scope="col" className="px-6 py-5 font-medium">
-                En camioneros
+                Kilometros
               </th>
               <th scope="col" className="px-6 py-5 font-medium">
                 <span className="sr-only">Editar</span>
@@ -30,19 +30,19 @@ return (
           </thead>
           <tbody>
             {
-              rawData?.map((employee) => (
+              rawData?.map((vehicle) => (
                 <tr
-                  key={employee.dni}
+                  key={vehicle.patente}
                   className='w-full border-b py-3 text-sm last-of-type:border-none bg-white [&:first-child>td:first-child]:rounded-tl-lg [&:first-child>td:last-child]:rounded-tr-lg [&:last-child>td:first-child]:rounded-bl-lg [&:last-child>td:last-child]:rounded-br-lg'
                 >
-                  <td className='whitespace-nowrap py-3 pl-6 pr-6'>{employee.dni}</td>
-                  <td className='whitespace-nowrap px-7 py-3'>{employee.nombre}</td>
-                  <td className='whitespace-nowrap px-7 py-3'>{employee.apellido}</td>
-                  <td className='text-center whitespace-nowrap px-3 py-3'>{employee.isCamionero ? 'SI' : 'NO'}</td>
+                  <td className='whitespace-nowrap py-3 pl-6 pr-6'>{vehicle.patente}</td>
+                  <td className='whitespace-nowrap px-7 py-3'>{vehicle.marca}</td>
+                  <td className='whitespace-nowrap px-7 py-3'>{vehicle.modelo}</td>
+                  <td className='text-center whitespace-nowrap px-3 py-3'>{vehicle.kmTotales}</td>
                   <td className='whitespace-nowrap px-7 py-3'>
                     <div className='flex justify-end gap-3'>
-                      <EditEmployee dni='38437001'/>
-                      <DeleteEmployee dni='38437001'/>
+                      <EditVehicle patente='AB194DL'/>
+                      <DeleteVehicle patente='38437001'/>
                     </div>
                   </td>
                 </tr>

@@ -58,3 +58,33 @@ export function AddVehicle() {
     </Link>
   )
 }
+
+
+
+export function EditVehicle({ patente }: { patente: string }){
+
+  return (
+    <Link
+      href={`/dashboard/vehicles/${patente}/edit`}
+      className="rounded-md border p-2 hover:bg-gray-200"
+    >
+      <PencilIcon className="w-5"/>
+    </Link>
+  )
+
+}
+
+export function DeleteVehicle({ patente }: { patente: string }) {
+
+  
+  return (
+    
+    <form action="">
+      <button className="rounded-md border p-2 hover:bg-gray-200">
+        <span className="sr-only">Delete</span>
+        <TrashIcon className="w-5" />
+      </button>
+    </form>
+  )
+
+}
