@@ -6,9 +6,10 @@ import {
 } from "@heroicons/react/16/solid";
 import Link from "next/link";
 import { Button } from "../Button";
+import { Vehiculo } from "@/app/lib/definitions";
 
 
-export default function AddFormVehicle(){
+export default function EditFormVehicle({ vehiculo }: { vehiculo: Vehiculo }){
 
   return (
     <form action="">
@@ -23,7 +24,7 @@ export default function AddFormVehicle(){
               type="text"
               placeholder="Ingrese la patente" 
               className="peer block w-full rounded-md border broder-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
-              defaultValue=""
+              defaultValue={vehiculo.patente}
             />
             <IdentificationIcon 
               className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500"
@@ -40,7 +41,7 @@ export default function AddFormVehicle(){
                 type="text"
                 placeholder="Ingrese la marca" 
                 className="peer block w-full rounded-md border broder-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
-                defaultValue=""
+                defaultValue={vehiculo.marca}
               />
               <UserCircleIcon
                 className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500"
@@ -57,7 +58,7 @@ export default function AddFormVehicle(){
                 type="text"
                 placeholder="Ingrese el modelo" 
                 className="peer block w-full rounded-md border broder-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
-                defaultValue=""
+                defaultValue={vehiculo.modelo}
               />
               <UserCircleIcon
                 className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500"
@@ -74,7 +75,7 @@ export default function AddFormVehicle(){
                 type="text"
                 placeholder="Ingrese los kilometros" 
                 className="peer block w-full rounded-md border broder-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
-                defaultValue=""
+                defaultValue={vehiculo.kmTotales}
               />
               <AtSymbolIcon
                 className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500"
