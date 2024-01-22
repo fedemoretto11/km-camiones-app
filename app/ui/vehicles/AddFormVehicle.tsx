@@ -6,12 +6,13 @@ import {
 } from "@heroicons/react/16/solid";
 import Link from "next/link";
 import { Button } from "../Button";
+import { createVehicle } from "@/app/lib/actions";
 
 
 export default function AddFormVehicle(){
 
   return (
-    <form action="">
+    <form action={createVehicle}>
       <div className="w-full rounded-md bg-gray-50 p-6">
 
         {/* patente */}
@@ -20,6 +21,7 @@ export default function AddFormVehicle(){
           <div className="relative">
             <input
               id="patente"
+              name="patente"
               type="text"
               placeholder="Ingrese la patente" 
               className="peer block w-full rounded-md border broder-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
@@ -37,6 +39,7 @@ export default function AddFormVehicle(){
             <div className="relative">
               <input
                 id="reparto"
+                name="reparto"
                 type="text"
                 placeholder="Ingrese el modelo" 
                 className="peer block w-full rounded-md border broder-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
@@ -50,10 +53,11 @@ export default function AddFormVehicle(){
 
         {/* marca */}
         <div className="mb-4">
-            <label htmlFor="name" className="block mb-2 text-sm font-medium">Marca</label>
+            <label htmlFor="marmca" className="block mb-2 text-sm font-medium">Marca</label>
             <div className="relative">
               <input
-                id="name"
+                id="marca"
+                name="marca"
                 type="text"
                 placeholder="Ingrese la marca" 
                 className="peer block w-full rounded-md border broder-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
@@ -67,10 +71,11 @@ export default function AddFormVehicle(){
 
           {/* modelo */}
           <div className="mb-4">
-            <label htmlFor="lastname" className="block mb-2 text-sm font-medium">Modelo</label>
+            <label htmlFor="modelo" className="block mb-2 text-sm font-medium">Modelo</label>
             <div className="relative">
               <input
-                id="lastname"
+                id="modelo"
+                name="modelo"
                 type="text"
                 placeholder="Ingrese el modelo" 
                 className="peer block w-full rounded-md border broder-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
@@ -88,6 +93,7 @@ export default function AddFormVehicle(){
             <div className="relative">
               <input
                 id="km"
+                name="km"
                 type="text"
                 placeholder="Ingrese los kilometros" 
                 className="peer block w-full rounded-md border broder-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"

@@ -1,11 +1,13 @@
 import Search from "@/app/ui/Search";
-import Table from "@/app/ui/employee/Table";
 
 import rawData from '@/app/db/vehiculos-prueba.json'
 import { AddVehicle } from "@/app/ui/buttons";
 import TableVehicle from "@/app/ui/vehicles/TableVehicle";
+import { Vehiculo } from "@/app/lib/definitions";
+import { fetchVehicles } from "@/app/lib/data";
 
-const HEADERS = ["DNI", "Nombre", "Apellido", "En camioneros"]
+
+const vehiculos = fetchVehicles();
 
 
 export default function Page() {
