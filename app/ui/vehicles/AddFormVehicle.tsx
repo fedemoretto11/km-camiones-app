@@ -1,3 +1,5 @@
+'use client'
+
 import { 
   AtSymbolIcon,
   IdentificationIcon, 
@@ -7,12 +9,26 @@ import {
 import Link from "next/link";
 import { Button } from "../Button";
 import { createVehicle } from "@/app/lib/actions";
+import { FormEvent, useState } from "react";
 
 
 export default function AddFormVehicle(){
 
+  const [error, setError] = useState<boolean>(false)
+
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    const result = await createVehicle(formData)
+    if (result) {
+      setError(true)
+    }
+  }
+
+
+
   return (
-    <form action={createVehicle}>
+    <form onSubmit={handleSubmit}>
       <div className="w-full rounded-md bg-gray-50 p-6">
 
         {/* patente */}
@@ -31,6 +47,15 @@ export default function AddFormVehicle(){
               className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500"
             />
           </div>
+          {
+            error &&
+            <span 
+            className="block mb-2 ml-2 text-sm font-medium text-red-700"
+          >
+            Ya existe un vehiculo con la misma patente
+          </span>
+          }
+          
         </div>
 
         {/* reparto */}
@@ -89,11 +114,11 @@ export default function AddFormVehicle(){
 
           {/* KM */}
           <div className="mb-4">
-            <label htmlFor="km" className="block mb-2 text-sm font-medium">Kilometros</label>
+            <label htmlFor="kmTotales" className="block mb-2 text-sm font-medium">Kilometros</label>
             <div className="relative">
               <input
-                id="km"
-                name="km"
+                id="kmTotales"
+                name="kmTotales"
                 type="text"
                 placeholder="Ingrese los kilometros" 
                 className="peer block w-full rounded-md border broder-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
@@ -109,7 +134,7 @@ export default function AddFormVehicle(){
 
           <div className="flex mt-6 justify-end gap-4">
             <Link
-              href='/dashboard/employees'
+              href='/dashboard/vehicles'
               className="flex h-10 items-center justify-center px-4 rounded-lg bg-gray-100 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-200"
             >
               Cancelar

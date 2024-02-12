@@ -1,7 +1,8 @@
 import rawData from '@/app/db/vehiculos-prueba.json'
 import { DeleteVehicle, EditVehicle } from '../buttons'
+import { Vehiculo } from '@/app/lib/definitions'
 
-export default function TableVehicle() {
+export default function TableVehicle({ vehicleData } : { vehicleData: Vehiculo[] }) {
 
 
 return (
@@ -33,7 +34,7 @@ return (
           </thead>
           <tbody>
             {
-              rawData?.map((vehicle) => (
+              vehicleData?.map((vehicle) => (
                 <tr
                   key={vehicle.patente}
                   className='w-full border-b py-3 text-sm last-of-type:border-none bg-white [&:first-child>td:first-child]:rounded-tl-lg [&:first-child>td:last-child]:rounded-tr-lg [&:last-child>td:first-child]:rounded-bl-lg [&:last-child>td:last-child]:rounded-br-lg'
