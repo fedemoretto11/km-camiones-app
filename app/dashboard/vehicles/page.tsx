@@ -1,10 +1,13 @@
 import Search from "@/app/ui/Search";
 
 import rawData from '@/app/db/vehiculos-prueba.json'
+
 import { AddVehicle } from "@/app/ui/buttons";
 import TableVehicle from "@/app/ui/vehicles/TableVehicle";
+
 import { Vehiculo } from "@/app/lib/definitions";
 import { fetchVehicles } from "@/app/lib/data";
+
 
 
 const vehiculos = fetchVehicles();

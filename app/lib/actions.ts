@@ -1,10 +1,11 @@
 'use server'
 
-import { db } from '@/app/db/firebase.js'
-import { CollectionReference, DocumentReference, addDoc, collection } from 'firebase/firestore'
+import { db } from '@/app/db/firebase.ts'
+import { CollectionReference, DocumentReference, addDoc, collection, doc, setDoc } from 'firebase/firestore'
 import { z } from 'zod'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
+import test from '../db/dbTest'
 
 const vehicleSchema = z.object({
   patente: z.string().toUpperCase(),
@@ -40,10 +41,12 @@ export async function createVehicle(formData: FormData) {
   
   
   try {
-    // const collectionRef: CollectionReference = collection(db, "km-camiones-app")
-    // const docRef: DocumentReference = await addDoc(collectionRef, vehiculo)
+    const collectionRef: CollectionReference = collection(db, "vehiculos")
+    const vehicleDocRef: DocumentReference = doc(collectionRef, vehiculo.patente)
+    await setDoc(vehicleDocRef, vehiculo)
+    console.log("Vehicle created successfully:", vehiculo);
   } catch (error) {
-    
+    console.error("Error creating vehicle:", error);
   }
   revalidatePath('/dashboard/vehicles')
   redirect('/dashboard/vehicles')

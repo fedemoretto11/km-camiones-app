@@ -11,9 +11,9 @@ export default async function test() {
   try {
     const collectionRef: CollectionReference = collection(db, "km-camiones-app");
     const empleado: Empleado = {
-      dni: "38437001",
-      nombre: "Federico",
-      apellido: "Moretto",
+      dni: "38383383",
+      nombre: "Ricardo",
+      apellido: "DeAsturias",
       isCamionero: false
     }
 
