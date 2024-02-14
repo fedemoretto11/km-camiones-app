@@ -1,17 +1,16 @@
 'use server'
 
-import { CollectionReference, DocumentReference, QueryDocumentSnapshot, collection, doc, getDoc, getDocs } from "firebase/firestore"
-import { db } from "../db/firebase"
+import { DocumentReference, QueryDocumentSnapshot, doc, getDoc, getDocs } from "firebase/firestore"
 import { Empleado, Vehiculo } from "./definitions"
+import { EMPLOYEE_COLLECTION_REF, VEHICLE_COLLECTION_REF } from "./const"
 
 
 
 
 export async function fetchVehicles(): Promise<Vehiculo[] | undefined> {
   try {
-    const collectionRef: CollectionReference = collection(db, "vehiculos")
 
-    const querySnapshot = await getDocs(collectionRef)
+    const querySnapshot = await getDocs(VEHICLE_COLLECTION_REF)
     const vehicleData: Vehiculo[] = [];
 
     querySnapshot.forEach((doc: QueryDocumentSnapshot) => {
@@ -29,9 +28,8 @@ export async function fetchVehicles(): Promise<Vehiculo[] | undefined> {
 
 export async function fetchEmployees(): Promise<Empleado[] | undefined> {
   try {
-    const collectionRef: CollectionReference = collection(db, "empleados")
 
-    const querySnapshot = await getDocs(collectionRef)
+    const querySnapshot = await getDocs(EMPLOYEE_COLLECTION_REF)
     const employeeData: Empleado[] = [];
 
     querySnapshot.forEach((doc: QueryDocumentSnapshot) => {
@@ -49,9 +47,8 @@ export async function fetchEmployees(): Promise<Empleado[] | undefined> {
 
 export async function getVehicleById(patente: string ) {
   try {
-    const collectionRef: CollectionReference = collection(db, "vehiculos")
     
-    const docRef: DocumentReference = doc(collectionRef, patente)
+    const docRef: DocumentReference = doc(VEHICLE_COLLECTION_REF, patente)
     const docSnap = await getDoc(docRef)
 
     if (docSnap.exists()) {
@@ -67,9 +64,7 @@ export async function getVehicleById(patente: string ) {
 export async function getEmployeeByDni(dni: string) {
   try {
 
-    const collectionRef: CollectionReference = collection(db, "empleados")
-
-    const docRef: DocumentReference = doc(collectionRef, dni)
+    const docRef: DocumentReference = doc(EMPLOYEE_COLLECTION_REF, dni)
     const docSnap  = await getDoc(docRef)
 
     if (docSnap.exists()) {
