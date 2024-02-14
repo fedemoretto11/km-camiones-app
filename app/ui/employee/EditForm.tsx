@@ -6,12 +6,13 @@ import {
 import Link from "next/link";
 import { Button } from "../Button";
 import { Empleado } from "@/app/lib/definitions";
+import { editEmployee } from "@/app/lib/actions";
 
 
-export default function EditForm({ employee }: {employee: Empleado}){
+export default function EditForm({ employee }: {employee: Empleado | undefined}){
 
   return (
-    <form action="">
+    <form action={editEmployee}>
       <div className="w-full rounded-md bg-gray-50 p-6">
 
         {/* DNI */}
@@ -20,10 +21,11 @@ export default function EditForm({ employee }: {employee: Empleado}){
           <div className="relative">
             <input
               id="dni"
-              type="text"
+              name="dni"
+              type="number"
               placeholder="Ingrese el dni" 
               className="peer block w-full rounded-md border broder-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
-              defaultValue={employee.dni}
+              defaultValue={employee?.dni}
             />
             <IdentificationIcon 
               className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500"
@@ -37,10 +39,11 @@ export default function EditForm({ employee }: {employee: Empleado}){
             <div className="relative">
               <input
                 id="name"
+                name="name"
                 type="text"
                 placeholder="Ingrese el nombre" 
                 className="peer block w-full rounded-md border broder-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
-                defaultValue={employee.nombre}
+                defaultValue={employee?.nombre}
               />
               <UserCircleIcon
                 className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500"
@@ -54,10 +57,11 @@ export default function EditForm({ employee }: {employee: Empleado}){
             <div className="relative">
               <input
                 id="lastname"
+                name="lastname"
                 type="text"
                 placeholder="Ingrese el apellido" 
                 className="peer block w-full rounded-md border broder-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
-                defaultValue={employee.apellido}
+                defaultValue={employee?.apellido}
               />
               <UserCircleIcon
                 className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500"
@@ -75,7 +79,7 @@ export default function EditForm({ employee }: {employee: Empleado}){
                 id="union"
                 name="union"
                 className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
-                defaultValue={`${employee.isCamionero ? 'SI' : 'NO'}`}
+                defaultValue={`${employee?.isCamionero ? 'SI' : 'NO'}`}
               >
                 <option value="" disabled>
                   Pertenece a camioneros
@@ -83,7 +87,7 @@ export default function EditForm({ employee }: {employee: Empleado}){
                 <option value="true" >
                   SI
                 </option>
-                <option value="false" >
+                <option value="" >
                   NO
                 </option>
               </select>

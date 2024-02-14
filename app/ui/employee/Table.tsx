@@ -1,7 +1,7 @@
-import rawData from '@/app/db/empelados-prueba.json'
 import { DeleteEmployee, EditEmployee } from '../buttons'
+import { Empleado } from '@/app/lib/definitions'
 
-export default function Table() {
+export default function Table({ employeeData } : { employeeData: Empleado[] }) {
 
 
 return (
@@ -30,7 +30,7 @@ return (
           </thead>
           <tbody>
             {
-              rawData?.map((employee) => (
+              employeeData?.map((employee) => (
                 <tr
                   key={employee.dni}
                   className='w-full border-b py-3 text-sm last-of-type:border-none bg-white [&:first-child>td:first-child]:rounded-tl-lg [&:first-child>td:last-child]:rounded-tr-lg [&:last-child>td:first-child]:rounded-bl-lg [&:last-child>td:last-child]:rounded-br-lg'
@@ -41,8 +41,8 @@ return (
                   <td className='text-center whitespace-nowrap px-3 py-3'>{employee.isCamionero ? 'SI' : 'NO'}</td>
                   <td className='whitespace-nowrap px-7 py-3'>
                     <div className='flex justify-end gap-3'>
-                      <EditEmployee dni='38437001'/>
-                      <DeleteEmployee dni='38437001'/>
+                      <EditEmployee dni={employee.dni}/>
+                      <DeleteEmployee dni={employee.dni}/>
                     </div>
                   </td>
                 </tr>

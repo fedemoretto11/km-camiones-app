@@ -2,7 +2,7 @@
 
 import { CollectionReference, DocumentReference, QueryDocumentSnapshot, collection, doc, getDoc, getDocs } from "firebase/firestore"
 import { db } from "../db/firebase"
-import { Vehiculo } from "./definitions"
+import { Empleado, Vehiculo } from "./definitions"
 
 
 
@@ -27,6 +27,26 @@ export async function fetchVehicles(): Promise<Vehiculo[] | undefined> {
 
 }
 
+export async function fetchEmployees(): Promise<Empleado[] | undefined> {
+  try {
+    const collectionRef: CollectionReference = collection(db, "empleados")
+
+    const querySnapshot = await getDocs(collectionRef)
+    const employeeData: Empleado[] = [];
+
+    querySnapshot.forEach((doc: QueryDocumentSnapshot) => {
+      const data = doc.data() as Empleado;
+      employeeData.push(data)
+    })
+
+    return employeeData
+
+  } catch (error) {
+    console.error("Error al cargar datos", error)
+  }
+
+}
+
 export async function getVehicleById(patente: string ) {
   try {
     const collectionRef: CollectionReference = collection(db, "vehiculos")
@@ -41,5 +61,22 @@ export async function getVehicleById(patente: string ) {
 
   } catch (error) {
     console.error("Error al cargar datos", error)
+  }
+}
+
+export async function getEmployeeByDni(dni: string) {
+  try {
+
+    const collectionRef: CollectionReference = collection(db, "empleados")
+
+    const docRef: DocumentReference = doc(collectionRef, dni)
+    const docSnap  = await getDoc(docRef)
+
+    if (docSnap.exists()) {
+      return docSnap.data()
+    }
+    
+  } catch (error) {
+    
   }
 }

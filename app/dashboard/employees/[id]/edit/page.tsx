@@ -1,9 +1,27 @@
+'use client'
+
+import { getEmployeeByDni } from "@/app/lib/data";
+import { Empleado } from "@/app/lib/definitions";
 import EditForm from "@/app/ui/employee/EditForm";
-import rawData from '@/app/db/empelados-prueba.json'
+import { useEffect, useState } from "react";
 
-export default function Page() {
+export default function Page({ params }: { params: {id: string} }) {
 
-  const empleado = rawData[0]
+  const [empleado, setEmpleado] = useState<Empleado>()
+
+  const dni = params.id
+
+  useEffect(() => {
+    const fetchEmpleado = async () => {
+      try {
+        const data = await getEmployeeByDni(dni)
+        setEmpleado(data as Empleado)
+      } catch (error) {
+        console.error("Error al cargar datos:", error);
+      }
+    }
+    fetchEmpleado()
+  }, [])
 
   return ( 
 
