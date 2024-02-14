@@ -97,7 +97,7 @@ export default function EditFormVehicle({ vehiculo }: { vehiculo: Vehiculo | und
               <input
                 id="kmTotales"
                 name="kmTotales"
-                type="text"
+                type="number"
                 placeholder="Ingrese los kilometros" 
                 className="peer block w-full rounded-md border broder-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
                 defaultValue={vehiculo?.kmTotales}
