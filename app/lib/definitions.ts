@@ -21,4 +21,6 @@ export type Registro = {
   kmIniciales: number;
   kmFinales: number;
   kmViaje: number;
+  litrosCargados: number;
+  consumo: number;
 }
