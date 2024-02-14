@@ -1,9 +1,29 @@
+'use client'
+
+import { getVehicleById } from "@/app/lib/data";
+import { Vehiculo } from "@/app/lib/definitions";
 import EditFormVehicle from "@/app/ui/vehicles/EditFormVehicle";
-import rawData from '@/app/db/vehiculos-prueba.json'
+import { useEffect, useState } from "react";
 
-const vehiculo = rawData[0]
 
-export default function Page() {
+export default function Page({ params }: {params: {patente: string}}) {
+
+  const [vehiculo, setVehiculo] = useState<Vehiculo>();
+
+  const patente = params.patente
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await getVehicleById(patente);
+        setVehiculo(data as Vehiculo);
+      } catch (error) {
+        console.error("Error al cargar datos:", error);
+      }
+    };
+
+    fetchData();
+  }, [patente]);
 
   return (
     <main>

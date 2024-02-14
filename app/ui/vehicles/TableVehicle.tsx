@@ -1,4 +1,3 @@
-import rawData from '@/app/db/vehiculos-prueba.json'
 import { DeleteVehicle, EditVehicle } from '../buttons'
 import { Vehiculo } from '@/app/lib/definitions'
 
@@ -46,7 +45,7 @@ return (
                   <td className='text-center whitespace-nowrap px-3 py-3'>{vehicle.kmTotales}</td>
                   <td className='whitespace-nowrap px-7 py-3'>
                     <div className='flex justify-end gap-3'>
-                      <EditVehicle patente='AB194DL'/>
+                      <EditVehicle patente={vehicle.patente}/>
                       <DeleteVehicle patente='38437001'/>
                     </div>
                   </td>

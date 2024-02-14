@@ -2,7 +2,6 @@
 
 import Search from "@/app/ui/Search";
 
-import rawData from '@/app/db/vehiculos-prueba.json'
 
 import { AddVehicle } from "@/app/ui/buttons";
 import TableVehicle from "@/app/ui/vehicles/TableVehicle";
@@ -26,6 +25,7 @@ export default function Page() {
 
   },[])
 
+    
   return (
     <section className="w-full">
       <div className="flex w-full items-center justify-between">
