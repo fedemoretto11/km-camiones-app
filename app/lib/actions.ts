@@ -85,11 +85,6 @@ export async function deleteVehicle(patente: string) {
 
 
 
-export async function createRegister(formData: FormData) {
-  const rawData = {
-    
-  }
-}
 
 export async function createEmployee(formData: FormData) {
   const rawData = {
