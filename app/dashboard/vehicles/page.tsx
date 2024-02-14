@@ -7,8 +7,10 @@ import { AddVehicle } from "@/app/ui/buttons";
 import TableVehicle from "@/app/ui/vehicles/TableVehicle";
 
 import { Vehiculo } from "@/app/lib/definitions";
-import { fetchVehicles, getVehicleById } from "@/app/lib/data";
+import { fetchVehicles } from "@/app/lib/data";
 import { useEffect, useState } from "react";
+import { QueryDocumentSnapshot, collection, onSnapshot } from "firebase/firestore";
+import { db } from "@/app/db/firebase";
 
 
 
@@ -24,6 +26,22 @@ export default function Page() {
       })
 
   },[])
+
+  useEffect(() => {
+    const unsubscribe = onSnapshot(collection(db, "vehiculos"), (querySnapshot) => {
+      const vehicleData: Vehiculo[] = [];
+  
+      querySnapshot.forEach((doc: QueryDocumentSnapshot) => {
+        const data = doc.data() as Vehiculo;
+        vehicleData.push(data);
+      });
+  
+      setVehicles(vehicleData);
+    });
+  
+    return () => unsubscribe();
+  }, []);
+  
 
     
   return (

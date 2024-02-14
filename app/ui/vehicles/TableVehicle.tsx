@@ -46,7 +46,7 @@ return (
                   <td className='whitespace-nowrap px-7 py-3'>
                     <div className='flex justify-end gap-3'>
                       <EditVehicle patente={vehicle.patente}/>
-                      <DeleteVehicle patente='38437001'/>
+                      <DeleteVehicle patente={vehicle.patente}/>
                     </div>
                   </td>
                 </tr>

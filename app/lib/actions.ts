@@ -1,7 +1,7 @@
 'use server'
 
 import { db } from '@/app/db/firebase.ts'
-import { CollectionReference, DocumentReference, collection, doc, setDoc, updateDoc } from 'firebase/firestore'
+import { CollectionReference, DocumentReference, collection, deleteDoc, doc, setDoc, updateDoc } from 'firebase/firestore'
 
 import { z } from 'zod'
 import { revalidatePath } from 'next/cache'
@@ -17,21 +17,8 @@ const vehicleSchema = z.object({
 })
 
 
-
-
-
-export async function createEmployee(formData: FormData) {
-  const rawData = {
-
-  }
-}
-
-
-
-
-
 export async function createVehicle( formData: FormData) {
-
+  
   const vehiculo = vehicleSchema.parse({
     patente: formData.get('patente'),
     reparto: formData.get('reparto'),
@@ -39,14 +26,14 @@ export async function createVehicle( formData: FormData) {
     modelo: formData.get('modelo'),
     kmTotales: formData.get('kmTotales')
   })
-
+  
   const vehiculoExists = await getVehicleById(vehiculo.patente)
   console.log(vehiculoExists)
-
+  
   if (vehiculoExists) {
     return 1
   }
-
+  
   try {
     const collectionRef: CollectionReference = collection(db, "vehiculos")
     const vehicleDocRef: DocumentReference = doc(collectionRef, vehiculo.patente)
@@ -56,10 +43,11 @@ export async function createVehicle( formData: FormData) {
   }
   revalidatePath('/dashboard/vehicles')
   redirect('/dashboard/vehicles')
-
+  
 }
-export async function editVehicle( formData: FormData) {
 
+export async function editVehicle( formData: FormData) {
+  
   const vehiculo = vehicleSchema.parse({
     patente: formData.get('patente'),
     reparto: formData.get('reparto'),
@@ -67,7 +55,7 @@ export async function editVehicle( formData: FormData) {
     modelo: formData.get('modelo'),
     kmTotales: formData.get('kmTotales')
   })
-
+  
   try {
     const collectionRef: CollectionReference = collection(db, "vehiculos")
     const vehicleDocRef: DocumentReference = doc(collectionRef, vehiculo.patente)
@@ -77,12 +65,34 @@ export async function editVehicle( formData: FormData) {
   }
   revalidatePath('/dashboard/vehicles')
   redirect('/dashboard/vehicles')
-
+  
 }
+
+export async function deleteVehicle(patente: string) {
+  try {
+    const collectionRef: CollectionReference = collection(db, "vehiculos")
+    const vehicleDocRef: DocumentReference = doc(collectionRef, patente)
+    await deleteDoc(vehicleDocRef)
+    revalidatePath('/dashboard/vehicles')
+    redirect('/dashboard/vehicles')
+  } catch (error) {
+    console.error("Error creating vehicle:", error);
+    return 1
+  }
+}
+
+
+
 
 
 export async function createRegister(formData: FormData) {
   const rawData = {
     
+  }
+}
+
+export async function createEmployee(formData: FormData) {
+  const rawData = {
+
   }
 }

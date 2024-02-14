@@ -1,5 +1,6 @@
 import { PencilIcon, PlusCircleIcon, PlusIcon, TrashIcon, UserPlusIcon } from "@heroicons/react/16/solid"
 import Link from "next/link"
+import { deleteVehicle } from "../lib/actions"
 
 
 export function AddEmployee() {
@@ -76,10 +77,13 @@ export function EditVehicle({ patente }: { patente: string }){
 
 export function DeleteVehicle({ patente }: { patente: string }) {
 
+
+  const deleteVehicleWithPlate = deleteVehicle.bind(null, patente)
+
   
   return (
     
-    <form action="">
+    <form action={deleteVehicleWithPlate}>
       <button className="rounded-md border p-2 hover:bg-gray-200">
         <span className="sr-only">Delete</span>
         <TrashIcon className="w-5" />
