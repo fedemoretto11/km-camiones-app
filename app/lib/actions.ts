@@ -172,7 +172,10 @@ export async function createRegister(formData: FormData) {
     consumo: formData.get("consumo")
   })
 
+
+  // console.log(registro)
   const vehicle = await getVehicleById(registro.vehiculo)
+  
 
   try {
     if (vehicle) {
@@ -182,11 +185,14 @@ export async function createRegister(formData: FormData) {
         kmTotales: registro.kmFinales
       })
       await setDoc(registerRef, registro)
-
     }
-  } catch (error) {
+  } 
+  catch (error) {
     console.error("Error creating vehicle:", error);
   }
-  revalidatePath('/dashboard/registers')
-  redirect('/dashboard/registers')
+  finally {
+    console.log("Registro creado exitosamente", registro)
+    revalidatePath('/dashboard/registers')
+    redirect('/dashboard/registers')
+  }
 }
