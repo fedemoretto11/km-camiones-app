@@ -1,6 +1,22 @@
+'use client'
+
+import { fetchEmployees } from "@/app/lib/data";
+import { Empleado } from "@/app/lib/definitions";
 import { AddRegister } from "@/app/ui/buttons";
+import { ChoferInput } from "@/app/ui/registers/inputs";
+import { useEffect, useState } from "react";
 
 export default function Page() {
+
+  const [employees, setEmployees] = useState<Empleado[]>([])
+  
+
+  useEffect(() => {
+    fetchEmployees()
+      .then((data: Empleado[] | undefined) => {
+        setEmployees(data ?? [])
+      })
+  }, [])
 
 
   return (
@@ -12,6 +28,8 @@ export default function Page() {
       <div className="mt-4 flex items-center justify-between gap-2 md:mt-8">
         {/* <Search placeholder="Buscar vehiculo"/> */}
         <AddRegister />
+      </div>
+      <div className="mt-4">
       </div>
     </section>
     )

@@ -1,15 +1,12 @@
 'use client'
 
-import { 
-  CalculatorIcon
-} from "@heroicons/react/16/solid";
 import Link from "next/link";
 import { Button } from "../Button";
-import { ChangeEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Empleado, Vehiculo } from "@/app/lib/definitions";
-import { fetchEmployees, fetchVehicles, getVehicleById } from "@/app/lib/data";
+import { fetchEmployees, fetchVehicles } from "@/app/lib/data";
 import { createRegister } from "@/app/lib/actions";
-import { ChoferInput, FechaInput, VehiculoInput, KmFinales, Litros, ResumenOutput } from "./inputs";
+import { ChoferInput, FechaInput, VehiculoInput, KmFinales, Litros, ResumenOutput, Observaciones } from "./inputs";
 
 
 
@@ -83,6 +80,8 @@ export default function AddFormRegisters(){
         <FechaInput />
         <KmFinales setKmTicket={setKmTicket}/>
         <Litros setLitros={setLitros}/>
+
+        <Observaciones />
 
         <div className="flex flex-1 flex-col w-96">
           <ResumenOutput  valor={vehicleSelected?.kmTotales} name="kmIniciales" label="KM Iniciales" />

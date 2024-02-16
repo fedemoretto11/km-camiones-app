@@ -7,6 +7,7 @@ import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { getEmployeeByDni, getVehicleById } from './data'
 import { EMPLOYEE_COLLECTION_REF, REGISTERS_COLLECTION_REF, VEHICLE_COLLECTION_REF } from './const'
+import { Vehiculo } from './definitions'
 
 
 
@@ -31,13 +32,15 @@ const registerSchema = z.object({
   vehiculo: z.string(),
   chofer: z.string(),
   ayudante: z.string().nullable(),
-  fecha: z.string(),
+  fecha: z.coerce.date(),
   kmIniciales: z.coerce.number(),
   kmFinales: z.coerce.number(),
   kmViaje: z.coerce.number(),
   litrosCargados: z.coerce.number(),
-  consumo: z.coerce.number()
+  consumo: z.coerce.number(),
+  observaciones: z.string().nullable()
 })
+
 
 
 export async function createVehicle( formData: FormData) {
@@ -160,6 +163,9 @@ export async function deleteEmployee(dni: string) {
 
 
 export async function createRegister(formData: FormData) {
+
+
+
   const registro = registerSchema.parse({
     vehiculo: formData.get("reparto"),
     chofer: formData.get("chofer"),
@@ -169,9 +175,9 @@ export async function createRegister(formData: FormData) {
     kmFinales: formData.get("kmFinales"),
     kmViaje: formData.get("kmRecorridos"),
     litrosCargados: formData.get("litros"),
-    consumo: formData.get("consumo")
+    consumo: formData.get("consumo"),
+    observaciones: formData.get("observaciones")
   })
-
 
   // console.log(registro)
   const vehicle = await getVehicleById(registro.vehiculo)

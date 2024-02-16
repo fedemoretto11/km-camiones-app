@@ -23,4 +23,5 @@ export type Registro = {
   kmViaje: number;
   litrosCargados: number;
   consumo: number;
+  observaciones: null | string
 }
