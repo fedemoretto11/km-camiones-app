@@ -1,8 +1,8 @@
 'use server'
 
-import { DocumentReference, QueryDocumentSnapshot, doc, getDoc, getDocs } from "firebase/firestore"
-import { Empleado, Vehiculo } from "./definitions"
-import { EMPLOYEE_COLLECTION_REF, VEHICLE_COLLECTION_REF } from "./const"
+import { DocumentReference, QueryDocumentSnapshot, and, doc, getDoc, getDocs, or, query, where } from "firebase/firestore"
+import { Empleado, Registro, Vehiculo } from "./definitions"
+import { EMPLOYEE_COLLECTION_REF, REGISTERS_COLLECTION_REF, VEHICLE_COLLECTION_REF } from "./const"
 
 
 
@@ -45,6 +45,48 @@ export async function fetchEmployees(): Promise<Empleado[] | undefined> {
 
 }
 
+
+// Funciona filtrando por nombre de chofer (dni)
+export async function fetchRegistersByQuery(dni: string) {
+  const fechaDesde: Date = new Date();
+  fechaDesde.setDate(1);
+  fechaDesde.setMonth(1);
+  fechaDesde.setHours(0, 0, 0, 0);
+
+  const fechaHasta: Date = new Date();
+  fechaHasta.setDate(1)
+  fechaHasta.setMonth(2)
+  fechaHasta.setHours(0, 0, 0, 0)
+
+  try {
+    const q = query(
+      REGISTERS_COLLECTION_REF, 
+      and(
+        where("fecha",">=", fechaDesde),
+        where("fecha","<", fechaHasta),
+        or(
+          where("chofer", "==", dni),
+          where("ayudante", "==", dni)
+        )
+      )
+    ) 
+    const reg: Registro[] = []
+
+    const querySnapshot = await getDocs(q)
+    console.log(querySnapshot)
+    querySnapshot.forEach((doc) => {
+      const data = doc.data() as Registro
+      reg.push(data)
+    })
+    return reg
+    // console.log(querySnapshot)
+
+    
+  } catch (error) {
+    console.log("Error al cargar datos", error)
+  }
+}
+
 export async function getVehicleById(patente: string ) {
   try {
     
@@ -75,3 +117,4 @@ export async function getEmployeeByDni(dni: string) {
     
   }
 }
+
