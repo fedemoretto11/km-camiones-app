@@ -1,9 +1,9 @@
 'use client'
 
-import { fetchEmployees, fetchRegistersByQuery } from "@/app/lib/data";
+import { fetchEmployees, fetchRegistersByQuery, getEmployeeByDni } from "@/app/lib/data";
 import { Empleado, Registro } from "@/app/lib/definitions";
-import { Button } from "@/app/ui/Button";
 import { AddRegister } from "@/app/ui/buttons";
+import { ChoferInputOnChange } from "@/app/ui/registers/inputs";
 import { useEffect, useState } from "react";
 
 export default function Page() {
@@ -15,28 +15,47 @@ export default function Page() {
   
   const [employeeSelected, setEmployeeSelected] = useState<Empleado>()
   const [date, setDate] = useState<Date>()
-  
-  useEffect(() => {
-    fetchRegistersByQuery("10855133")
-      .then((data) => {
-        if (data) {
-          setRegistros([...registros, ...data])
-        }
-      })
-  }, [])
 
   useEffect(() => {
-    if (registros.length > 0) {
-      const totalKmReduce = registros.reduce(
-        (accumulator, current) => accumulator + current.kmViaje, 0
-      )
-      setTotalKm(totalKmReduce)
+    fetchEmployees()
+      .then((data) => {
+        setEmployees(data || [])
+      })
+  }, [])
+  
+  
+  useEffect(() => {
+    // dni harcodeado de prueba
+    setRegistros([])
+    if (employeeSelected) {
+      fetchRegistersByQuery(employeeSelected?.dni)
+        .then((data) => {
+          if (data) {
+            setRegistros(data)
+          }
+        })
+    }
+  }, [employeeSelected])
+
+
+  useEffect(() => {
+    if (employeeSelected && employeeSelected.isCamionero === false) {
+      if (registros.length > 0) {
+        const totalKmReduce: number = registros.reduce(
+          (accumulator, current) => accumulator + current.kmViaje, 0
+        )
+        setTotalKm(totalKmReduce)
+      }
+    } else {
+      setTotalKm(0)
     }
   },[registros])
 
   const onHandlingClick = async () => {
-    console.log(registros)
-    console.log(totalKM)
+    // console.log(employees)
+    console.log("Registros: ", registros)
+    // console.log(totalKM)
+    console.log("Empleado seleccionado: ", employeeSelected)
   }
 
 
@@ -51,6 +70,12 @@ export default function Page() {
         <AddRegister />
       </div>
       <div className="mt-4">
+        <ChoferInputOnChange 
+          employees={employees} 
+          name="chofer"
+          setEmployeeSelected={setEmployeeSelected}  
+        />
+        <h3>Total KM: {totalKM}</h3>
         <button type="button" onClick={onHandlingClick}>
           ver
         </button>

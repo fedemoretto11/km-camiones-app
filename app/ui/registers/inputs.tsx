@@ -7,6 +7,12 @@ type VehiculoSelectionProps = {
   setVehicleSelected: (vehicle: Vehiculo | undefined) => void;
 };
 
+type EmployeeSelectionProps = {
+  employees: Empleado[];
+  name: string;
+  setEmployeeSelected: (employee: Empleado | undefined) => void;
+}
+
 
 
 export function VehiculoInput({ vehicles, setVehicleSelected }: VehiculoSelectionProps) {
@@ -60,6 +66,45 @@ export function ChoferInput({employees, name}: { employees: Empleado[], name: st
         name={name}
         className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
         defaultValue=""
+      >
+        <option value="" disabled>
+          {name == 'chofer' ? "Chofer" : "Acompañante"}
+        </option>
+        {
+          employees?.map((empleado) => (
+            <option
+              value={empleado.dni}
+              key={empleado.dni}
+            >
+              {empleado.nombre}  {empleado.apellido}
+            </option>
+          ))
+        }
+      </select>
+        <UserCircleIcon
+          className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500"
+        />
+      </div>
+    </div>  
+  )
+}
+
+export function ChoferInputOnChange({employees, name, setEmployeeSelected}: EmployeeSelectionProps) {
+  return (
+    <div className="mb-4">
+      {/* <label htmlFor={name} className="block mb-2 text-sm font-medium">
+        {name == 'chofer' ? "Chofer" : "Acompañante"}
+      </label> */}
+      <div className="relative">
+      <select
+        id={name}
+        name={name}
+        className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
+        defaultValue=""
+        onChange={(event: ChangeEvent<HTMLSelectElement>) => {
+          const selectedEmployee = employees.find(employee => employee.dni === event.target.value);
+          setEmployeeSelected(selectedEmployee)
+        }}
       >
         <option value="" disabled>
           {name == 'chofer' ? "Chofer" : "Acompañante"}
