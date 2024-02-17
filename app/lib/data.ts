@@ -47,15 +47,18 @@ export async function fetchEmployees(): Promise<Empleado[] | undefined> {
 
 
 // Funciona filtrando por nombre de chofer (dni)
-export async function fetchRegistersByQuery(dni: string) {
+export async function fetchRegistersByQuery(dni: string, month: string) {
+  
   const fechaDesde: Date = new Date();
   fechaDesde.setDate(1);
-  fechaDesde.setMonth(1);
+  fechaDesde.setMonth(parseInt(month));
+  fechaDesde.setFullYear(2024)
   fechaDesde.setHours(0, 0, 0, 0);
 
   const fechaHasta: Date = new Date();
   fechaHasta.setDate(1)
-  fechaHasta.setMonth(2)
+  fechaHasta.setMonth(parseInt(month) + 1)
+  fechaHasta.setFullYear(2024)
   fechaHasta.setHours(0, 0, 0, 0)
 
   try {

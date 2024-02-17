@@ -3,7 +3,7 @@
 import { fetchEmployees, fetchRegistersByQuery, getEmployeeByDni } from "@/app/lib/data";
 import { Empleado, Registro } from "@/app/lib/definitions";
 import { AddRegister } from "@/app/ui/buttons";
-import { ChoferInputOnChange } from "@/app/ui/registers/inputs";
+import { ChoferInputOnChange, SelectMonth } from "@/app/ui/registers/inputs";
 import { useEffect, useState } from "react";
 
 export default function Page() {
@@ -14,7 +14,7 @@ export default function Page() {
   const [employees, setEmployees] = useState<Empleado[]>([])
   
   const [employeeSelected, setEmployeeSelected] = useState<Empleado>()
-  const [date, setDate] = useState<Date>()
+  const [month, setMonth] = useState<string>()
 
   useEffect(() => {
     fetchEmployees()
@@ -27,16 +27,13 @@ export default function Page() {
   useEffect(() => {
     // dni harcodeado de prueba
     setRegistros([])
-    if (employeeSelected) {
-      fetchRegistersByQuery(employeeSelected?.dni)
+    if (employeeSelected && month) {
+      fetchRegistersByQuery(employeeSelected?.dni, month)
         .then((data) => {
-          if (data) {
-            setRegistros(data)
-          }
+          setRegistros(data || [])
         })
     }
   }, [employeeSelected])
-
 
   useEffect(() => {
     if (employeeSelected && employeeSelected.isCamionero === false) {
@@ -56,6 +53,7 @@ export default function Page() {
     console.log("Registros: ", registros)
     // console.log(totalKM)
     console.log("Empleado seleccionado: ", employeeSelected)
+    console.log("Mes: ", month)
   }
 
 
@@ -75,6 +73,7 @@ export default function Page() {
           name="chofer"
           setEmployeeSelected={setEmployeeSelected}  
         />
+        <SelectMonth setMonth={setMonth}/>
         <h3>Total KM: {totalKM}</h3>
         <button type="button" onClick={onHandlingClick}>
           ver

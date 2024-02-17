@@ -1,3 +1,4 @@
+import { MONTHS } from "@/app/lib/const";
 import { Empleado, Vehiculo } from "@/app/lib/definitions";
 import { CalculatorIcon, CalendarDaysIcon, DocumentTextIcon, TruckIcon, UserCircleIcon } from "@heroicons/react/16/solid";
 import { ChangeEvent } from "react";
@@ -129,6 +130,13 @@ export function ChoferInputOnChange({employees, name, setEmployeeSelected}: Empl
 }
 
 export function FechaInput() {
+
+  const actualDate: Date = new Date()
+  actualDate.setHours(0, 0, 0, 0);
+  actualDate.toString()
+  const formattedDate: string = actualDate.toISOString().split('T')[0]
+
+
   return (
     <div className="mb-4">
       {/* <label htmlFor="fecha" className="block mb-2 text-sm font-medium">Fecha</label> */}
@@ -140,6 +148,7 @@ export function FechaInput() {
           placeholder="Ingrese la fecha" 
           className="peer block w-full rounded-md border broder-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
           defaultValue=""
+          max={formattedDate}
         />
         <CalendarDaysIcon
           className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500"
@@ -234,5 +243,41 @@ export function Observaciones() {
         />
       </div>
     </div>
+  )
+}
+
+export function SelectMonth({setMonth}: {setMonth: (month: string) => void }) {
+  return (
+    <div className="mb-4">
+      {/* <label htmlFor="mes" className="block mb-2 text-sm font-medium">
+        {name == 'chofer' ? "Chofer" : "Acompañante"}
+      </label> */}
+      <div className="relative">
+      <select
+        id="mes"
+        name="mes"
+        className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
+        defaultValue=""
+        onChange={(event) => setMonth(event.target.value)}
+      >
+        <option value="" disabled>
+          Seleccione un mes
+        </option>
+        {
+          MONTHS.map((mes, index) => (
+            <option
+              value={index}
+              key={index}
+            >
+              {mes}
+            </option>
+          ))
+        }
+      </select>
+        <UserCircleIcon
+          className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500"
+        />
+      </div>
+    </div>  
   )
 }
