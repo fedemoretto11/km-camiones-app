@@ -1,6 +1,6 @@
 'use server'
 
-import { DocumentReference, QueryDocumentSnapshot, and, doc, getDoc, getDocs, or, query, where } from "firebase/firestore"
+import { DocumentReference, QueryDocumentSnapshot, Timestamp, and, doc, getDoc, getDocs, limit, or, orderBy, query, where } from "firebase/firestore"
 import { Empleado, Registro, Vehiculo } from "./definitions"
 import { EMPLOYEE_COLLECTION_REF, REGISTERS_COLLECTION_REF, VEHICLE_COLLECTION_REF } from "./const"
 
@@ -45,8 +45,7 @@ export async function fetchEmployees(): Promise<Empleado[] | undefined> {
 
 }
 
-
-export async function fetchRegistersByQuery(dni: string, month: string, year: string) {
+export async function fetchRegistersByQuery(empleado: Empleado, month: string, year: string) {
 
   const mes = parseInt(month)
   const anio = parseInt(year)
@@ -63,17 +62,20 @@ export async function fetchRegistersByQuery(dni: string, month: string, year: st
   fechaHasta.setFullYear(mes == 11 ? anio + 1 : anio)
   fechaHasta.setHours(0, 0, 0, 0)
 
+  const fechaDesdeTimestamp = Timestamp.fromDate(fechaDesde);
+  const fechaHastaeTimestamp = Timestamp.fromDate(fechaHasta);
+
 
 
   try {
     const q = query(
       REGISTERS_COLLECTION_REF, 
       and(
-        where("fecha",">=", fechaDesde),
-        where("fecha","<", fechaHasta),
+        where("fecha",">=", fechaDesdeTimestamp),
+        where("fecha","<", fechaHastaeTimestamp),
         or(
-          where("chofer", "==", dni),
-          where("ayudante", "==", dni)
+          where("chofer", "==", empleado),
+          where("ayudante", "==", empleado)
         )
       )
     ) 
@@ -92,10 +94,37 @@ export async function fetchRegistersByQuery(dni: string, month: string, year: st
   }
 }
 
-export async function getVehicleById(patente: string ) {
+export async function fetchRegisters() {
   try {
     
-    const docRef: DocumentReference = doc(VEHICLE_COLLECTION_REF, patente)
+    const regData: Registro[] = [];
+
+    const q = query(REGISTERS_COLLECTION_REF, orderBy("fecha"), limit(10));
+
+    const querySnapshot = await getDocs(q)
+
+    querySnapshot.forEach((doc: QueryDocumentSnapshot) => {
+      const data = doc.data() as Registro;
+      regData.push(data)
+    })
+
+    return regData
+
+  } catch (error) {
+    console.log("Error al cargar datos", error)
+  }
+}
+
+export async function getVehicleById(patente: string | FormDataEntryValue | null) {
+  try {
+
+    if (patente === null) {
+      return null
+    }
+
+    const patenteString: string = patente.toString();
+    
+    const docRef: DocumentReference = doc(VEHICLE_COLLECTION_REF, patenteString)
     const docSnap = await getDoc(docRef)
 
     if (docSnap.exists()) {
@@ -108,10 +137,16 @@ export async function getVehicleById(patente: string ) {
   }
 }
 
-export async function getEmployeeByDni(dni: string) {
+export async function getEmployeeByDni(dni: string | FormDataEntryValue | null) {
   try {
 
-    const docRef: DocumentReference = doc(EMPLOYEE_COLLECTION_REF, dni)
+    if (dni === null) {
+      return null
+    }
+
+    const dniString : string = dni.toString()
+
+    const docRef: DocumentReference = doc(EMPLOYEE_COLLECTION_REF, dniString)
     const docSnap  = await getDoc(docRef)
 
     if (docSnap.exists()) {

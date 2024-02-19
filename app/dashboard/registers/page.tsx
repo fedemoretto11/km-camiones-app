@@ -1,8 +1,9 @@
 'use client'
 
-import { fetchEmployees, fetchRegistersByQuery, getEmployeeByDni } from "@/app/lib/data";
+import { fetchEmployees, fetchRegisters, fetchRegistersByQuery, getEmployeeByDni } from "@/app/lib/data";
 import { Empleado, Registro } from "@/app/lib/definitions";
 import { AddRegister } from "@/app/ui/buttons";
+import TableRegisters from "@/app/ui/registers/TableRegisters";
 import { ChoferInputOnChange, SelectMonth, SelectYear } from "@/app/ui/registers/inputs";
 import { useEffect, useState } from "react";
 
@@ -24,6 +25,12 @@ export default function Page() {
       .then((data) => {
         setEmployees(data || [])
       })
+
+    // fetchRegisters()
+    //   .then((data) => {
+    //     setRegistros(data || [])
+    //   })
+
   }, [])
   
   
@@ -31,7 +38,7 @@ export default function Page() {
     // dni harcodeado de prueba
     setRegistros([])
     if (employeeSelected && month && year) {
-      fetchRegistersByQuery(employeeSelected?.dni, month, year)
+      fetchRegistersByQuery(employeeSelected, month, year)
         .then((data) => {
           setRegistros(data || [])
         })
@@ -87,6 +94,7 @@ export default function Page() {
           Filtrar
         </button>
       </div>
+      <TableRegisters registersData={registros}/>
         <h3>Total KM: {totalKM}</h3>
     </section>
     )
