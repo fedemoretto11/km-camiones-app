@@ -6,3 +6,5 @@ export const EMPLOYEE_COLLECTION_REF: CollectionReference = collection(db, "empl
 export const REGISTERS_COLLECTION_REF: CollectionReference = collection(db, "registros")
 
 export const MONTHS: string[] = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"]
+
+export const YEARS: string[] = ["2024"]

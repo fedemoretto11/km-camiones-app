@@ -46,20 +46,24 @@ export async function fetchEmployees(): Promise<Empleado[] | undefined> {
 }
 
 
-// Funciona filtrando por nombre de chofer (dni)
-export async function fetchRegistersByQuery(dni: string, month: string) {
+export async function fetchRegistersByQuery(dni: string, month: string, year: string) {
+
+  const mes = parseInt(month)
+  const anio = parseInt(year)
   
   const fechaDesde: Date = new Date();
   fechaDesde.setDate(1);
-  fechaDesde.setMonth(parseInt(month));
-  fechaDesde.setFullYear(2024)
+  fechaDesde.setMonth(mes);
+  fechaDesde.setFullYear(anio)
   fechaDesde.setHours(0, 0, 0, 0);
 
   const fechaHasta: Date = new Date();
   fechaHasta.setDate(1)
-  fechaHasta.setMonth(parseInt(month) + 1)
-  fechaHasta.setFullYear(2024)
+  fechaHasta.setMonth(mes == 11 ? 0 : mes + 1)
+  fechaHasta.setFullYear(mes == 11 ? anio + 1 : anio)
   fechaHasta.setHours(0, 0, 0, 0)
+
+
 
   try {
     const q = query(
@@ -76,13 +80,11 @@ export async function fetchRegistersByQuery(dni: string, month: string) {
     const reg: Registro[] = []
 
     const querySnapshot = await getDocs(q)
-    console.log(querySnapshot)
     querySnapshot.forEach((doc) => {
       const data = doc.data() as Registro
       reg.push(data)
     })
     return reg
-    // console.log(querySnapshot)
 
     
   } catch (error) {

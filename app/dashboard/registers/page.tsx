@@ -3,7 +3,7 @@
 import { fetchEmployees, fetchRegistersByQuery, getEmployeeByDni } from "@/app/lib/data";
 import { Empleado, Registro } from "@/app/lib/definitions";
 import { AddRegister } from "@/app/ui/buttons";
-import { ChoferInputOnChange, SelectMonth } from "@/app/ui/registers/inputs";
+import { ChoferInputOnChange, SelectMonth, SelectYear } from "@/app/ui/registers/inputs";
 import { useEffect, useState } from "react";
 
 export default function Page() {
@@ -15,7 +15,10 @@ export default function Page() {
   
   const [employeeSelected, setEmployeeSelected] = useState<Empleado>()
   const [month, setMonth] = useState<string>()
+  const [year, setYear] = useState<string>()
 
+  const [click, setClick] = useState<boolean>(false)
+  
   useEffect(() => {
     fetchEmployees()
       .then((data) => {
@@ -27,13 +30,13 @@ export default function Page() {
   useEffect(() => {
     // dni harcodeado de prueba
     setRegistros([])
-    if (employeeSelected && month) {
-      fetchRegistersByQuery(employeeSelected?.dni, month)
+    if (employeeSelected && month && year) {
+      fetchRegistersByQuery(employeeSelected?.dni, month, year)
         .then((data) => {
           setRegistros(data || [])
         })
     }
-  }, [employeeSelected])
+  }, [employeeSelected, month, year])
 
   useEffect(() => {
     if (employeeSelected && employeeSelected.isCamionero === false) {
@@ -50,11 +53,16 @@ export default function Page() {
 
   const onHandlingClick = async () => {
     // console.log(employees)
-    console.log("Registros: ", registros)
+    // console.log("Registros: ", registros)
     // console.log(totalKM)
-    console.log("Empleado seleccionado: ", employeeSelected)
-    console.log("Mes: ", month)
+    // console.log("Empleado seleccionado: ", employeeSelected)
+    // console.log("Mes: ", month)
+    // console.log("Año: ", year)
   }
+
+
+
+  
 
 
   return (
@@ -67,18 +75,19 @@ export default function Page() {
         {/* <Search placeholder="Buscar vehiculo"/> */}
         <AddRegister />
       </div>
-      <div className="mt-4">
+      <div className="mt-4 flex gap-4">
         <ChoferInputOnChange 
           employees={employees} 
           name="chofer"
           setEmployeeSelected={setEmployeeSelected}  
         />
         <SelectMonth setMonth={setMonth}/>
-        <h3>Total KM: {totalKM}</h3>
+        <SelectYear setYear={setYear} />
         <button type="button" onClick={onHandlingClick}>
-          ver
+          Filtrar
         </button>
       </div>
+        <h3>Total KM: {totalKM}</h3>
     </section>
     )
 }

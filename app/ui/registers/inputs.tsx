@@ -1,4 +1,4 @@
-import { MONTHS } from "@/app/lib/const";
+import { MONTHS, YEARS } from "@/app/lib/const";
 import { Empleado, Vehiculo } from "@/app/lib/definitions";
 import { CalculatorIcon, CalendarDaysIcon, DocumentTextIcon, TruckIcon, UserCircleIcon } from "@heroicons/react/16/solid";
 import { ChangeEvent } from "react";
@@ -270,6 +270,42 @@ export function SelectMonth({setMonth}: {setMonth: (month: string) => void }) {
               key={index}
             >
               {mes}
+            </option>
+          ))
+        }
+      </select>
+        <UserCircleIcon
+          className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500"
+        />
+      </div>
+    </div>  
+  )
+}
+
+export function SelectYear({setYear}: {setYear: (year: string) => void }) {
+  return (
+    <div className="mb-4">
+      {/* <label htmlFor="year" className="block mb-2 text-sm font-medium">
+        {name == 'chofer' ? "Chofer" : "Acompañante"}
+      </label> */}
+      <div className="relative">
+      <select
+        id="year"
+        name="year"
+        className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
+        defaultValue=""
+        onChange={(event) => setYear(event.target.value)}
+      >
+        <option value="" disabled>
+          Seleccione un el año
+        </option>
+        {
+          YEARS.map((year, index) => (
+            <option
+              value={year}
+              key={index}
+            >
+              {year}
             </option>
           ))
         }
