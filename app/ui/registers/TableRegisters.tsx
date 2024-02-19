@@ -18,7 +18,13 @@ return (
                 Ayudante
               </th>
               <th scope="col" className="px-6 py-5 font-medium">
+                Reparto
+              </th>
+              <th scope="col" className="px-6 py-5 font-medium">
                 Vehiculo
+              </th>
+              <th scope="col" className="px-6 py-5 font-medium">
+                Patente
               </th>
               <th scope="col" className="px-6 py-5 font-medium">
                 Fecha
@@ -52,11 +58,15 @@ return (
                     >
                       <td className='whitespace-nowrap py-3 pl-6 pr-6'>{register.chofer.nombre} {register.chofer.apellido}</td>
                       <td className='whitespace-nowrap px-7 py-3'>{register.ayudante ? `${register.ayudante.nombre} ${register.ayudante.apellido}`: "-"}</td>
-                      <td className='whitespace-nowrap px-7 py-3'>{register.vehiculo.marca} {register.vehiculo.modelo} || {register.vehiculo.patente}</td>
+                      <td className='whitespace-nowrap px-7 py-3'>{register.vehiculo.reparto}</td>
+                      <td className='whitespace-nowrap px-7 py-3'>{register.vehiculo.marca} {register.vehiculo.modelo}</td>
+                      <td className='whitespace-nowrap px-7 py-3'>{register.vehiculo.patente}</td>
                       <td className='whitespace-nowrap px-7 py-3'>{fecha.toLocaleDateString('es-AR')}</td>
-                      <td className='text-center whitespace-nowrap px-3 py-3'>{register.kmViaje}</td>
-                      <td className='text-center whitespace-nowrap px-3 py-3'>{register.consumo} l/100 km</td>
-                      <td className='text-center whitespace-nowrap px-3 py-3'>{register.observaciones ? register.observaciones : "Sin observaciones"}</td>
+                      <td className='text-center whitespace-nowrap px-3 py-3'>{register.kmViaje.toLocaleString('es-AR')}</td>
+                      <td className='text-center whitespace-nowrap px-3 py-3'>{register.consumo.toLocaleString('es-AR',{
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2,})} l/100 km</td>
+                      <td className='text-center whitespace-nowrap px-3 py-3'>{register.observaciones ? register.observaciones : "-"}</td>
                       <td className='whitespace-nowrap px-7 py-3'>
                         <div className='flex justify-end gap-3'>
                           {/* <EditVehicle patente={register.patente}/> */}

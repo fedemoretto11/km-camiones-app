@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import './globals.css'
-import { raleway } from './ui/fonts'
+import { lato } from './ui/fonts'
 
 
 export const metadata: Metadata = {
@@ -15,7 +15,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="es">
-      <body className={raleway.className}>{children}</body>
+      <body className={lato.className}>{children}</body>
     </html>
   )
 }

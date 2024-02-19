@@ -92,7 +92,7 @@ export function ChoferInput({employees, name}: { employees: Empleado[], name: st
 
 export function ChoferInputOnChange({employees, name, setEmployeeSelected}: EmployeeSelectionProps) {
   return (
-    <div className="mb-4">
+    <div className="mb-4 flex-1">
       {/* <label htmlFor={name} className="block mb-2 text-sm font-medium">
         {name == 'chofer' ? "Chofer" : "Acompañante"}
       </label> */}
@@ -100,7 +100,7 @@ export function ChoferInputOnChange({employees, name, setEmployeeSelected}: Empl
       <select
         id={name}
         name={name}
-        className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
+        className="h-10 peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
         defaultValue=""
         onChange={(event: ChangeEvent<HTMLSelectElement>) => {
           const selectedEmployee = employees.find(employee => employee.dni === event.target.value);
@@ -248,7 +248,7 @@ export function Observaciones() {
 
 export function SelectMonth({setMonth}: {setMonth: (month: string) => void }) {
   return (
-    <div className="mb-4">
+    <div className="mb-4 flex-1">
       {/* <label htmlFor="mes" className="block mb-2 text-sm font-medium">
         {name == 'chofer' ? "Chofer" : "Acompañante"}
       </label> */}
@@ -256,7 +256,7 @@ export function SelectMonth({setMonth}: {setMonth: (month: string) => void }) {
       <select
         id="mes"
         name="mes"
-        className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
+        className="h-10 peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
         defaultValue=""
         onChange={(event) => setMonth(event.target.value)}
       >
@@ -284,7 +284,7 @@ export function SelectMonth({setMonth}: {setMonth: (month: string) => void }) {
 
 export function SelectYear({setYear}: {setYear: (year: string) => void }) {
   return (
-    <div className="mb-4">
+    <div className="mb-4 flex-1 ">
       {/* <label htmlFor="year" className="block mb-2 text-sm font-medium">
         {name == 'chofer' ? "Chofer" : "Acompañante"}
       </label> */}
@@ -292,12 +292,12 @@ export function SelectYear({setYear}: {setYear: (year: string) => void }) {
       <select
         id="year"
         name="year"
-        className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
+        className="h-10 peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
         defaultValue=""
         onChange={(event) => setYear(event.target.value)}
       >
         <option value="" disabled>
-          Seleccione un el año
+          Seleccione el año
         </option>
         {
           YEARS.map((year, index) => (
