@@ -7,8 +7,7 @@ import { ChangeEvent } from "react";
 type VehiculoSelectionProps = {
   vehicles: Vehiculo[];
   setVehicleSelected: (vehicle: Vehiculo | undefined) => void;
-  vehicle?: Vehiculo | undefined
-};
+} & React.SelectHTMLAttributes<HTMLSelectElement>;
 
 type EmployeeSelectionProps = {
   employees: Empleado[];
@@ -21,7 +20,7 @@ const LABEL_STYLES = 'block w-28 text-sm font-medium'
 
 
 
-export function VehiculoInput({ vehicles, setVehicleSelected, vehicle }: VehiculoSelectionProps) {
+export function VehiculoInput({ vehicles, setVehicleSelected, ...rest }: VehiculoSelectionProps) {
   return (
     <div className="mb-4 flex gap-6 items-center">
       <label htmlFor="reparto" className={LABEL_STYLES}>Reparto</label>
@@ -30,13 +29,13 @@ export function VehiculoInput({ vehicles, setVehicleSelected, vehicle }: Vehicul
           id="reparto"
           name="reparto"
           className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
-          defaultValue={vehicle?.patente}
+          {...rest}
           onChange={(event: ChangeEvent<HTMLSelectElement>) => {
             const selectedVehicle = vehicles.find(vehicle => vehicle.patente === event.target.value);
             setVehicleSelected(selectedVehicle);
           }}
         >
-          <option value="" disabled>
+          <option value="" disabled selected>
             Reparto
           </option>
           {
@@ -73,7 +72,7 @@ export function ChoferInput({employees, name, className, ...rest}: { employees: 
         className={clsx("peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500", className)}
         {...rest}
       >
-        <option value="" disabled>
+        <option value="" disabled selected>
           {name == 'chofer' ? "Chofer" : "Acompañante"}
         </option>
         {

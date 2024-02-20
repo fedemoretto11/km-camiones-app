@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { Button } from "../Button";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Empleado, Vehiculo } from "@/app/lib/definitions";
 import { fetchEmployees, fetchVehicles } from "@/app/lib/data";
 import { createRegister } from "@/app/lib/actions";
@@ -21,7 +21,6 @@ export default function AddFormRegisters(){
 
   const [kmTicket, setKmTicket] = useState<number>()
   const [kmRecorridos, setKmRecorridos] = useState<number>()
-  const [consumo, setConsumo] = useState<number>()
   const [litros, setLitros] = useState<number>()
 
   useEffect(() => {
@@ -29,10 +28,16 @@ export default function AddFormRegisters(){
       .then((data: Vehiculo[] | undefined) => {
         setVehicles(data ?? [])
       })
+      .catch((error) => {
+        console.log("Error al cargar Vehiculos: ", error)
+      })
 
     fetchEmployees()
       .then((data: Empleado[] | undefined) => {
         setEmployees(data ?? [])
+      })
+      .catch((error) => {
+        console.log("Error al cargar Empleados: ", error)
       })
   },[])
 
@@ -43,16 +48,14 @@ export default function AddFormRegisters(){
 
   }, [kmTicket])
 
-  useEffect(() => {
+
+  const consumo = useMemo(() => {
     if (litros && kmRecorridos) {
       const consumoCalculado = (litros / kmRecorridos) * 100;
-      const consumoRedondeado = parseFloat(consumoCalculado.toFixed(2));
-      setConsumo(consumoRedondeado);
-    } else {
-      setConsumo(0)
+      return parseFloat(consumoCalculado.toFixed(2))
     }
-  }, [litros, kmRecorridos]);
-
+    return 0
+  }, [litros, kmRecorridos])
 
 
   return (
@@ -60,7 +63,7 @@ export default function AddFormRegisters(){
       <div className="w-full rounded-md bg-gray-50 p-6">
 
         <TicketNumberInput />
-        <VehiculoInput vehicles={vehicles} setVehicleSelected={setVehicleSelected}/>
+        <VehiculoInput vehicles={vehicles} setVehicleSelected={setVehicleSelected} defaultValue=''/>
         {/* Tiene acompañante? */}
         <div className="mb-4 flex flex-1 items-center gap-6">
           <ChoferInput employees={employees} name="chofer"/>

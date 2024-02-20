@@ -45,11 +45,14 @@ export default function EditFormRegisters({ register }: {register: Registro | un
       <div className="w-full rounded-md bg-gray-50 p-6">
 
         <TicketNumberInput ticket={register?.ticket} className={UNEDITABLE_INPUT}/>
-        <VehiculoInput 
+        {
+          register?.vehiculo &&
+          <VehiculoInput 
           vehicles={vehicles} 
           setVehicleSelected={setVehicleSelected} 
-          vehicle={vehicleSelected}
+          defaultValue={register?.vehiculo.patente}
         />
+        }
         {/* Tiene acompañante? */}
         <div className="mb-4 flex flex-1 items-center gap-6">
           {

@@ -3,6 +3,7 @@
 import { fetchEmployees, fetchRegisters, fetchRegistersByQuery, getEmployeeByDni } from "@/app/lib/data";
 import { Empleado, Registro } from "@/app/lib/definitions";
 import { Button } from "@/app/ui/Button";
+import { Modal } from "@/app/ui/Modal";
 import { AddRegister } from "@/app/ui/buttons";
 import TableRegisters from "@/app/ui/registers/TableRegisters";
 import { ChoferInputOnChange, SelectMonth, SelectYear } from "@/app/ui/registers/inputs";
@@ -66,6 +67,7 @@ export default function Page() {
 
   return (
     <section className="w-full">
+
       <div className="flex w-full items-center justify-between">
         <h1 className="text-3xl">Registros</h1>
       </div>

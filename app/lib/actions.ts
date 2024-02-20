@@ -5,7 +5,7 @@ import { DocumentReference, Timestamp, deleteDoc, doc, setDoc, updateDoc } from 
 import { z } from 'zod'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
-import { getEmployeeByDni, getVehicleById } from './data'
+import { getEmployeeByDni, getRegisterById, getVehicleById } from './data'
 import { EMPLOYEE_COLLECTION_REF, REGISTERS_COLLECTION_REF, VEHICLE_COLLECTION_REF } from './const'
 
 
@@ -176,20 +176,30 @@ export async function createRegister(formData: FormData) {
     observaciones: formData.get("observaciones")
   })
 
-  
+  const registerExists = await getRegisterById(registro.ticket)
+
+  if (registerExists) return 1
+
+  if (registro.ayudante && registro.chofer.dni === registro.ayudante.dni) {
+    throw new Error('El chofer y el ayudante no pueden ser la misma persona.')
+  }
 
   try {
     if (registro.vehiculo) {
       const vehicleDocRef: DocumentReference = doc(VEHICLE_COLLECTION_REF, registro.vehiculo.patente)
       const registerRef: DocumentReference = doc(REGISTERS_COLLECTION_REF, registro.ticket)
+      
+
       await updateDoc(vehicleDocRef, {
         kmTotales: registro.kmFinales
       })
       await setDoc(registerRef, registro)
+      return 0
     }
   } 
   catch (error) {
     console.error("Error creating vehicle:", error);
+    return 1
   }
   finally {
     console.log("Registro creado exitosamente", registro)
