@@ -181,7 +181,8 @@ export async function createRegister(formData: FormData) {
   if (registerExists) return 1
 
   if (registro.ayudante && registro.chofer.dni === registro.ayudante.dni) {
-    throw new Error('El chofer y el ayudante no pueden ser la misma persona.')
+    console.log("No se puede elegir el mismo empleado de chofer y acompañante")
+    return 1
   }
 
   try {
