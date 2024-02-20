@@ -105,3 +105,16 @@ export function AddRegister() {
     </Link>
   )
 }
+
+export function EditRegister({ id }: { id: string }){
+
+  return (
+    <Link
+      href={`/dashboard/registers/${id}/edit`}
+      className="rounded-md border p-2 hover:bg-gray-200"
+    >
+      <PencilIcon className="w-5" />
+    </Link>
+  )
+
+}

@@ -140,21 +140,35 @@ export async function getVehicleById(patente: string | FormDataEntryValue | null
 export async function getEmployeeByDni(dni: string | FormDataEntryValue | null) {
   try {
 
-    if (dni === null) {
-      return null
-    }
+    if (dni === null) return null
 
-    const dniString : string = dni.toString()
+    const dniString: string = dni.toString()
 
     const docRef: DocumentReference = doc(EMPLOYEE_COLLECTION_REF, dniString)
     const docSnap  = await getDoc(docRef)
 
-    if (docSnap.exists()) {
-      return docSnap.data()
-    }
+    if (docSnap.exists()) return docSnap.data()
+
     
   } catch (error) {
+    console.log("Error al cargar datos", error)
+  }
+}
+
+export async function getRegisterById(id: string | FormDataEntryValue | null) {
+  try {
+
+    if (id === null) return null
+
+    const idString: string = id.toString()
+
+    const docRef: DocumentReference = doc(REGISTERS_COLLECTION_REF, idString)
+    const docSnap = await getDoc(docRef)
+
+    if (docSnap.exists()) return docSnap.data()
     
+  } catch (error) {
+    console.log("Error al cargar datos", error)
   }
 }
 

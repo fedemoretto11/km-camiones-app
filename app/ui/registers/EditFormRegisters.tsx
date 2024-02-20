@@ -3,19 +3,19 @@
 import Link from "next/link";
 import { Button } from "../Button";
 import { useEffect, useState } from "react";
-import { Empleado, Vehiculo } from "@/app/lib/definitions";
+import { Empleado, Registro, Vehiculo } from "@/app/lib/definitions";
 import { fetchEmployees, fetchVehicles } from "@/app/lib/data";
 import { createRegister } from "@/app/lib/actions";
 import { ChoferInput, FechaInput, VehiculoInput, KmFinales, Litros, ResumenOutput, Observaciones, TicketNumberInput } from "./inputs";
 
 
 
-export default function AddFormRegisters(){
+export default function EditFormRegisters({ register }: {register: Registro | undefined}){
 
   const [vehicles, setVehicles] = useState<Vehiculo[]>([])
   const [employees, setEmployees] = useState<Empleado[]>([])
 
-  const [vehicleSelected, setVehicleSelected] = useState<Vehiculo>()
+  const [vehicleSelected, setVehicleSelected] = useState<Vehiculo | undefined>(register?.vehiculo)
 
   const [hasCodriver, setHasCodriver] = useState<boolean>(false)
 
@@ -34,51 +34,55 @@ export default function AddFormRegisters(){
       .then((data: Empleado[] | undefined) => {
         setEmployees(data ?? [])
       })
-  },[])
 
-  useEffect(() => {
-    if (kmTicket && vehicleSelected) {
-      setKmRecorridos(kmTicket - vehicleSelected?.kmTotales)
-    }
+    },[])
 
-  }, [kmTicket])
+    useEffect(() => {
 
-  useEffect(() => {
-    if (litros && kmRecorridos) {
-      const consumoCalculado = (litros / kmRecorridos) * 100;
-      const consumoRedondeado = parseFloat(consumoCalculado.toFixed(2));
-      setConsumo(consumoRedondeado);
-    } else {
-      setConsumo(0)
-    }
-  }, [litros, kmRecorridos]);
+      register?.ayudante ? setHasCodriver(true) : setHasCodriver(false)
 
-
+      },[register])
+    
 
   return (
     <form action={createRegister}>
       <div className="w-full rounded-md bg-gray-50 p-6">
 
-        <TicketNumberInput />
-        <VehiculoInput vehicles={vehicles} setVehicleSelected={setVehicleSelected}/>
+        <TicketNumberInput ticket={register?.ticket}/>
+        <VehiculoInput 
+          vehicles={vehicles} 
+          setVehicleSelected={setVehicleSelected} 
+          vehicle={vehicleSelected}
+        />
         {/* Tiene acompañante? */}
         <div className="mb-4 flex flex-1 items-center gap-6">
-          <ChoferInput employees={employees} name="chofer"/>
+          <ChoferInput 
+            employees={employees} 
+            name="chofer"
+            employee={register?.chofer}  
+          />
           <label htmlFor="hasCodriver" className="block mb-2 text-sm font-medium">Tiene acompañante</label>
           <div className="relative">
             <input 
               type="checkbox" 
               name="hasCodriver" 
               id="hasCodriver" 
+              checked={hasCodriver}
               onChange={() => {setHasCodriver(!hasCodriver)}}
               />
           </div>
           {
             hasCodriver &&
-            <ChoferInput employees={employees} name="codriver"/>
+            <ChoferInput 
+              employees={employees} 
+              name="codriver"
+              employee={register?.ayudante}  
+            />
           }
         </div>
-        <FechaInput />
+        <FechaInput 
+          fecha={register?.fecha}
+        />
         <KmFinales setKmTicket={setKmTicket}/>
         <Litros setLitros={setLitros}/>
 

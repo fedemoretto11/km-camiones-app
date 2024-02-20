@@ -26,6 +26,7 @@ const employeeSchema = z.object({
 })
 
 const registerSchema = z.object({
+  ticket: z.coerce.string(),
   vehiculo: vehicleSchema,
   chofer: employeeSchema,
   ayudante: employeeSchema.nullable(),
@@ -162,6 +163,7 @@ export async function deleteEmployee(dni: string) {
 export async function createRegister(formData: FormData) {
 
   const registro = registerSchema.parse({
+    ticket: formData.get("ticketNumber"),
     vehiculo: await getVehicleById(formData.get("reparto")),
     chofer: await getEmployeeByDni(formData.get("chofer")),
     ayudante: await getEmployeeByDni(formData.get("codriver")),
@@ -179,7 +181,7 @@ export async function createRegister(formData: FormData) {
   try {
     if (registro.vehiculo) {
       const vehicleDocRef: DocumentReference = doc(VEHICLE_COLLECTION_REF, registro.vehiculo.patente)
-      const registerRef: DocumentReference = doc(REGISTERS_COLLECTION_REF)
+      const registerRef: DocumentReference = doc(REGISTERS_COLLECTION_REF, registro.ticket)
       await updateDoc(vehicleDocRef, {
         kmTotales: registro.kmFinales
       })

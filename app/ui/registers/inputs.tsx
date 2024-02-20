@@ -1,22 +1,24 @@
 import { MONTHS, YEARS } from "@/app/lib/const";
 import { Empleado, Vehiculo } from "@/app/lib/definitions";
-import { CalculatorIcon, CalendarDaysIcon, DocumentTextIcon, TruckIcon, UserCircleIcon } from "@heroicons/react/16/solid";
+import { CalculatorIcon, CalendarDaysIcon, DocumentTextIcon, TicketIcon, TruckIcon, UserCircleIcon } from "@heroicons/react/16/solid";
 import { ChangeEvent } from "react";
 
 type VehiculoSelectionProps = {
   vehicles: Vehiculo[];
   setVehicleSelected: (vehicle: Vehiculo | undefined) => void;
+  vehicle?: Vehiculo | undefined
 };
 
 type EmployeeSelectionProps = {
   employees: Empleado[];
   name: string;
   setEmployeeSelected: (employee: Empleado | undefined) => void;
+  employee?: Empleado;
 }
 
 
 
-export function VehiculoInput({ vehicles, setVehicleSelected }: VehiculoSelectionProps) {
+export function VehiculoInput({ vehicles, setVehicleSelected, vehicle }: VehiculoSelectionProps) {
   return (
     <div className="mb-4">
       {/* <label htmlFor="reparto" className="block mb-2 text-sm font-medium">Reparto</label> */}
@@ -25,7 +27,7 @@ export function VehiculoInput({ vehicles, setVehicleSelected }: VehiculoSelectio
           id="reparto"
           name="reparto"
           className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
-          defaultValue=""
+          defaultValue={vehicle?.patente}
           onChange={(event: ChangeEvent<HTMLSelectElement>) => {
             const selectedVehicle = vehicles.find(vehicle => vehicle.patente === event.target.value);
             setVehicleSelected(selectedVehicle);
@@ -55,7 +57,7 @@ export function VehiculoInput({ vehicles, setVehicleSelected }: VehiculoSelectio
   )
 }
 
-export function ChoferInput({employees, name}: { employees: Empleado[], name: string }) {
+export function ChoferInput({employees, name, employee}: { employees: Empleado[], name: string, employee?: Empleado | undefined | null}) {
   return (
     <div className="mb-4">
       {/* <label htmlFor={name} className="block mb-2 text-sm font-medium">
@@ -66,7 +68,7 @@ export function ChoferInput({employees, name}: { employees: Empleado[], name: st
         id={name}
         name={name}
         className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
-        defaultValue=""
+        defaultValue={employee ? employee.dni : ''}
       >
         <option value="" disabled>
           {name == 'chofer' ? "Chofer" : "Acompañante"}
@@ -129,12 +131,21 @@ export function ChoferInputOnChange({employees, name, setEmployeeSelected}: Empl
   )
 }
 
-export function FechaInput() {
+export function FechaInput({ fecha }: { fecha?: Date | undefined}) {
 
-  const actualDate: Date = new Date()
-  actualDate.setHours(0, 0, 0, 0);
-  actualDate.toString()
-  const formattedDate: string = actualDate.toISOString().split('T')[0]
+  const maxDate: Date = new Date()
+  maxDate.setHours(0, 0, 0, 0);
+  maxDate.toString()
+  const maxFormattedDate: string = maxDate.toISOString().split('T')[0]
+
+  let actualDateString: string | undefined = '';
+  if (fecha) {
+    const fechaTimestamp: any = fecha;
+    const fechaModify = new Date(fechaTimestamp.seconds * 1000)
+    fechaModify.toString()
+    actualDateString = fechaModify.toISOString().split('T')[0]
+    console.log(actualDateString)
+  }
 
 
   return (
@@ -147,8 +158,8 @@ export function FechaInput() {
           type="date"
           placeholder="Ingrese la fecha" 
           className="peer block w-full rounded-md border broder-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
-          defaultValue=""
-          max={formattedDate}
+          defaultValue={actualDateString}
+          max={maxFormattedDate}
         />
         <CalendarDaysIcon
           className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500"
@@ -315,5 +326,26 @@ export function SelectYear({setYear}: {setYear: (year: string) => void }) {
         />
       </div>
     </div>  
+  )
+}
+
+export function TicketNumberInput({ ticket }: { ticket?: string | undefined }){
+  return (
+    <div className="mb-4">
+      {/* <label htmlFor="ticketNumber" className="block mb-2 text-sm font-medium">Litros Cargados</label> */}
+      <div className="relative">
+        <input
+          id="ticketNumber"
+          name="ticketNumber"
+          type="text"
+          placeholder="Ingrese el numero de Ticket" 
+          className="peer block w-full rounded-md border broder-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
+          value={ticket ?? ''}
+        />
+        <TicketIcon
+          className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500"
+        />
+      </div>
+    </div>
   )
 }

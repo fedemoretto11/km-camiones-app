@@ -1,5 +1,6 @@
 import { Registro } from '@/app/lib/definitions'
 import { Timestamp } from 'firebase/firestore';
+import { EditRegister, EditVehicle } from '../buttons';
 
 export default function TableRegisters({ registersData } : { registersData: Registro[] }) {
 
@@ -69,7 +70,7 @@ return (
                       <td className='text-center whitespace-nowrap px-3 py-3'>{register.observaciones ? register.observaciones : "-"}</td>
                       <td className='whitespace-nowrap px-7 py-3'>
                         <div className='flex justify-end gap-3'>
-                          {/* <EditVehicle patente={register.patente}/> */}
+                          <EditRegister id={register.ticket}/>
                           {/* <DeleteVehicle patente={register.patente}/> */}
                         </div>
                       </td>

@@ -1,5 +1,35 @@
 import { CollectionReference, collection } from "firebase/firestore"
 import { db } from "../db/firebase"
+import { 
+  HomeIcon, 
+  UserIcon, 
+  TruckIcon, 
+  ArchiveBoxIcon 
+} from "@heroicons/react/16/solid"
+
+export const LINKS = [
+  {
+    name: 'Inicio',
+    href: '/dashboard',
+    icon: HomeIcon
+  },
+  {
+    name: 'Empleados',
+    href: '/dashboard/employees',
+    icon: UserIcon
+  },
+  {
+    name: 'Vehiculos',
+    href: '/dashboard/vehicles',
+    icon: TruckIcon
+  },
+  {
+    name: 'Registros',
+    href: '/dashboard/registers',
+    icon: ArchiveBoxIcon
+  },
+  
+]
 
 export const VEHICLE_COLLECTION_REF: CollectionReference = collection(db, "vehiculos")
 export const EMPLOYEE_COLLECTION_REF: CollectionReference = collection(db, "empleados")
