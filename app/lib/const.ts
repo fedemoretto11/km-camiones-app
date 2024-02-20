@@ -38,3 +38,5 @@ export const REGISTERS_COLLECTION_REF: CollectionReference = collection(db, "reg
 export const MONTHS: string[] = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"]
 
 export const YEARS: string[] = ["2024"]
+
+export const UNEDITABLE_INPUT = 'bg-slate-200 border focus:border-transparent focus:outline-none hover:cursor-default caret-transparent'

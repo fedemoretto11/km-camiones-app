@@ -1,6 +1,7 @@
-import { MONTHS, YEARS } from "@/app/lib/const";
+import { MONTHS, UNEDITABLE_INPUT, YEARS } from "@/app/lib/const";
 import { Empleado, Vehiculo } from "@/app/lib/definitions";
 import { CalculatorIcon, CalendarDaysIcon, DocumentTextIcon, TicketIcon, TruckIcon, UserCircleIcon } from "@heroicons/react/16/solid";
+import clsx from "clsx";
 import { ChangeEvent } from "react";
 
 type VehiculoSelectionProps = {
@@ -16,13 +17,15 @@ type EmployeeSelectionProps = {
   employee?: Empleado;
 }
 
+const LABEL_STYLES = 'block w-28 text-sm font-medium'
+
 
 
 export function VehiculoInput({ vehicles, setVehicleSelected, vehicle }: VehiculoSelectionProps) {
   return (
-    <div className="mb-4">
-      {/* <label htmlFor="reparto" className="block mb-2 text-sm font-medium">Reparto</label> */}
-      <div className="relative">
+    <div className="mb-4 flex gap-6 items-center">
+      <label htmlFor="reparto" className={LABEL_STYLES}>Reparto</label>
+      <div className="relative flex-1">
         <select
           id="reparto"
           name="reparto"
@@ -57,18 +60,18 @@ export function VehiculoInput({ vehicles, setVehicleSelected, vehicle }: Vehicul
   )
 }
 
-export function ChoferInput({employees, name, employee}: { employees: Empleado[], name: string, employee?: Empleado | undefined | null}) {
+export function ChoferInput({employees, name, className, ...rest}: { employees: Empleado[], name: string} & React.SelectHTMLAttributes<HTMLSelectElement>) {
   return (
-    <div className="mb-4">
-      {/* <label htmlFor={name} className="block mb-2 text-sm font-medium">
+    <div className="mb-4 flex gap-6 items-center">
+      <label htmlFor={name} className={LABEL_STYLES}>
         {name == 'chofer' ? "Chofer" : "Acompañante"}
-      </label> */}
-      <div className="relative">
+      </label>
+      <div className="relative flex-1">
       <select
         id={name}
         name={name}
-        className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
-        defaultValue={employee ? employee.dni : ''}
+        className={clsx("peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500", className)}
+        {...rest}
       >
         <option value="" disabled>
           {name == 'chofer' ? "Chofer" : "Acompañante"}
@@ -95,7 +98,7 @@ export function ChoferInput({employees, name, employee}: { employees: Empleado[]
 export function ChoferInputOnChange({employees, name, setEmployeeSelected}: EmployeeSelectionProps) {
   return (
     <div className="mb-4 flex-1">
-      {/* <label htmlFor={name} className="block mb-2 text-sm font-medium">
+      {/* <label htmlFor={name} className={LABEL_STYLES}>
         {name == 'chofer' ? "Chofer" : "Acompañante"}
       </label> */}
       <div className="relative">
@@ -131,7 +134,7 @@ export function ChoferInputOnChange({employees, name, setEmployeeSelected}: Empl
   )
 }
 
-export function FechaInput({ fecha }: { fecha?: Date | undefined}) {
+export function FechaInput({ fecha, className, ...rest }: { fecha?: Date | undefined} & React.InputHTMLAttributes<HTMLInputElement>) {
 
   const maxDate: Date = new Date()
   maxDate.setHours(0, 0, 0, 0);
@@ -144,22 +147,22 @@ export function FechaInput({ fecha }: { fecha?: Date | undefined}) {
     const fechaModify = new Date(fechaTimestamp.seconds * 1000)
     fechaModify.toString()
     actualDateString = fechaModify.toISOString().split('T')[0]
-    console.log(actualDateString)
   }
 
 
   return (
-    <div className="mb-4">
-      {/* <label htmlFor="fecha" className="block mb-2 text-sm font-medium">Fecha</label> */}
-      <div className="relative">
+    <div className="mb-4 flex gap-6 items-center">
+      <label htmlFor="fecha" className={LABEL_STYLES}>Fecha</label>
+      <div className="relative flex-1">
         <input
           id="fecha"
           name="fecha"
           type="date"
           placeholder="Ingrese la fecha" 
-          className="peer block w-full rounded-md border broder-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
+          className={clsx("peer block w-full rounded-md border broder-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500", className)}
           defaultValue={actualDateString}
           max={maxFormattedDate}
+          {...rest}
         />
         <CalendarDaysIcon
           className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500"
@@ -169,20 +172,21 @@ export function FechaInput({ fecha }: { fecha?: Date | undefined}) {
   )
 }
 
-export function KmFinales({ setKmTicket } : {setKmTicket: (value: number | undefined) => void}){
+export function KmFinales({ setKmTicket, className,  ...rest } : { setKmTicket?: (value: number | undefined) => void} & React.InputHTMLAttributes<HTMLInputElement>){
   return (
-    <div className="mb-4">
-      {/* <label htmlFor="kmFinales" className="block mb-2 text-sm font-medium">KM Ticket</label> */}
-      <div className="relative">
+    <div className="mb-4 flex gap-6 items-center">
+      <label htmlFor="kmFinales" className={LABEL_STYLES}>KM Ticket</label>
+      <div className="relative flex-1">
         <input
           id="kmFinales"
           name="kmFinales"
           type="number"
           placeholder="Ingrese los kilometros" 
-          className="peer block w-full rounded-md border broder-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
+          className={clsx("peer block w-full rounded-md border broder-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500", className)}
           onChange={(event: ChangeEvent<HTMLInputElement>) => {
-            setKmTicket(Number(event.target.value));
+            setKmTicket ? setKmTicket(Number(event.target.value)) : '';
           }}
+          {...rest}
         />
         <CalculatorIcon
           className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500"
@@ -192,21 +196,21 @@ export function KmFinales({ setKmTicket } : {setKmTicket: (value: number | undef
   )
 }
 
-export function Litros({setLitros}: {setLitros: (value: number | undefined) => void}) {
+export function Litros({setLitros, className, ...rest}: {setLitros?: (value: number | undefined) => void} & React.InputHTMLAttributes<HTMLInputElement>) {
   return (
-    <div className="mb-4">
-      {/* <label htmlFor="litros" className="block mb-2 text-sm font-medium">Litros Cargados</label> */}
-      <div className="relative">
+    <div className="mb-4 flex gap-6 items-center">
+      <label htmlFor="litros" className={LABEL_STYLES}>Litros Cargados</label>
+      <div className="relative flex-1">
         <input
           id="litros"
           name="litros"
           type="text"
           placeholder="Ingrese los litros cargados" 
-          className="peer block w-full rounded-md border broder-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
+          className={clsx("peer block w-full rounded-md border broder-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500", className)}
           onChange={(event: ChangeEvent<HTMLInputElement>) => {
-            setLitros(parseFloat(event.target.value));
+            setLitros ? setLitros(parseFloat(event.target.value)) : '';
           }}
-          
+          {...rest}
         />
         <CalculatorIcon
           className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500"
@@ -219,16 +223,16 @@ export function Litros({setLitros}: {setLitros: (value: number | undefined) => v
 export function ResumenOutput({ valor, name, label }: {valor: number | undefined, name: string, label: string}) {
   return (
     <div className="mb-4 flex items-center justify-between gap-2">
-      <label htmlFor={name} className="block mb-2 text-sm font-medium">{label}</label>
+      <label htmlFor={name} className={LABEL_STYLES}>{label}</label>
       <div className="relative">
         <input
           id={name}
           name={name}
           type="number"
           placeholder="Seleccione un vehiculo para ver los KM" 
-          className="peer block w-full rounded-md border broder-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
+          className={clsx("peer block w-full rounded-md border broder-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500", UNEDITABLE_INPUT)}
           value={valor}
-          readOnly
+          
         />
         <CalculatorIcon
           className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500"
@@ -238,16 +242,17 @@ export function ResumenOutput({ valor, name, label }: {valor: number | undefined
   )
 }
 
-export function Observaciones() {
+export function Observaciones({ ...rest }: React.TextareaHTMLAttributes<HTMLTextAreaElement>) {
   return (
-    <div className="mb-4">
-      <div className="relative">
+    <div className="mb-4 flex gap-6 items-center">
+      <label htmlFor="observaciones" className={LABEL_STYLES}>Observaciones</label>
+      <div className="relative flex-1">
         <textarea
           id="observaciones"
           name="observaciones"
           placeholder="Observaciones" 
-          className="peer block w-full rounded-md border broder-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
-          defaultValue=""
+          className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
+          {...rest}
         />
         <DocumentTextIcon
           className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-4 text-gray-500"
@@ -329,18 +334,19 @@ export function SelectYear({setYear}: {setYear: (year: string) => void }) {
   )
 }
 
-export function TicketNumberInput({ ticket }: { ticket?: string | undefined }){
+export function TicketNumberInput({ ticket, className, ...rest }: { ticket?: string | undefined} & React.InputHTMLAttributes<HTMLInputElement>){
   return (
-    <div className="mb-4">
-      {/* <label htmlFor="ticketNumber" className="block mb-2 text-sm font-medium">Litros Cargados</label> */}
-      <div className="relative">
+    <div className="mb-4 flex gap-6 items-center">
+      <label htmlFor="ticketNumber" className={LABEL_STYLES}>N° Ticket</label>
+      <div className="relative flex-1">
         <input
           id="ticketNumber"
           name="ticketNumber"
           type="text"
           placeholder="Ingrese el numero de Ticket" 
-          className="peer block w-full rounded-md border broder-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
-          value={ticket ?? ''}
+          className={clsx("peer block w-full rounded-md border broder-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500", className)}
+          defaultValue={ticket}
+          {...rest}
         />
         <TicketIcon
           className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500"

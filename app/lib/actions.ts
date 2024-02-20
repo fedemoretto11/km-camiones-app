@@ -140,7 +140,7 @@ export async function editEmployee (formData: FormData) {
     const employeeReference: DocumentReference = doc(EMPLOYEE_COLLECTION_REF, employee.dni)
     await updateDoc(employeeReference, employee)
   } catch (error) {
-    console.error("Error creating vehicle:", error);
+    console.error("Error updating vehicle:", error);
     return 1
   }
   revalidatePath('/dashboard/employees')
@@ -193,6 +193,37 @@ export async function createRegister(formData: FormData) {
   }
   finally {
     console.log("Registro creado exitosamente", registro)
+    revalidatePath('/dashboard/registers')
+    redirect('/dashboard/registers')
+  }
+}
+
+export async function editRegister(formData: FormData) {
+
+  const registro = registerSchema.parse({
+    ticket: formData.get("ticketNumber"),
+    vehiculo: await getVehicleById(formData.get("reparto")),
+    chofer: await getEmployeeByDni(formData.get("chofer")),
+    ayudante: await getEmployeeByDni(formData.get("codriver")),
+    fecha: formData.get("fecha"),
+    kmIniciales: formData.get("kmIniciales"),
+    kmFinales: formData.get("kmFinales"),
+    kmViaje: formData.get("kmRecorridos"),
+    litrosCargados: formData.get("litros"),
+    consumo: formData.get("consumo"),
+    observaciones: formData.get("observaciones")
+  })
+
+  
+  try {
+    const registerRef: DocumentReference = doc(REGISTERS_COLLECTION_REF, registro.ticket)
+    await updateDoc(registerRef, registro)
+  } catch (error) {
+    console.error("Error updating register:", error);
+    return 1
+  }
+  finally {
+    console.log("Registro actualizado exitosamente", registro)
     revalidatePath('/dashboard/registers')
     redirect('/dashboard/registers')
   }

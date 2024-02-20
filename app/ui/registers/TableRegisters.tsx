@@ -67,7 +67,7 @@ return (
                       <td className='text-center whitespace-nowrap px-3 py-3'>{register.consumo.toLocaleString('es-AR',{
                         minimumFractionDigits: 2,
                         maximumFractionDigits: 2,})} l/100 km</td>
-                      <td className='text-center whitespace-nowrap px-3 py-3'>{register.observaciones ? register.observaciones : "-"}</td>
+                      <td className='whitespace-wrap px-3 py-3'>{register.observaciones ? register.observaciones : "-"}</td>
                       <td className='whitespace-nowrap px-7 py-3'>
                         <div className='flex justify-end gap-3'>
                           <EditRegister id={register.ticket}/>
