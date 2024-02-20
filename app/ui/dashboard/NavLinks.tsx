@@ -1,38 +1,9 @@
 'use client'
 
-import { 
-  HomeIcon, 
-  UserIcon, 
-  TruckIcon, 
-  ArchiveBoxIcon 
-} from "@heroicons/react/16/solid"
+import { LINKS } from "@/app/lib/const"
 import clsx from "clsx"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-
-const LINKS = [
-  {
-    name: 'Inicio',
-    href: '/dashboard',
-    icon: HomeIcon
-  },
-  {
-    name: 'Empleados',
-    href: '/dashboard/employees',
-    icon: UserIcon
-  },
-  {
-    name: 'Vehiculos',
-    href: '/dashboard/vehicles',
-    icon: TruckIcon
-  },
-  {
-    name: 'Registros',
-    href: '/dashboard/registers',
-    icon: ArchiveBoxIcon
-  },
-  
-]
 
 
 export default function Navlinks() {
@@ -44,6 +15,7 @@ export default function Navlinks() {
       {
       LINKS.map((link) => {
         const LinkIcon = link.icon
+        
         return (
           <Link
             key={link.name}

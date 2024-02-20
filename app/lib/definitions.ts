@@ -14,6 +14,7 @@ export type Vehiculo = {
 }
 
 export type Registro = {
+  ticket: string;
   vehiculo: Vehiculo;
   chofer: Empleado;
   ayudante: null | Empleado;
@@ -23,4 +24,5 @@ export type Registro = {
   kmViaje: number;
   litrosCargados: number;
   consumo: number;
+  observaciones: null | string
 }
