@@ -4,7 +4,7 @@ import { lato } from './ui/fonts'
 
 
 export const metadata: Metadata = {
-  title: 'Kilometros',
+  title: 'Kilometros App',
   description: 'Sitio web privado para el calculo y registros de los KM de vehiculos empresariales',
 }
 
@@ -15,6 +15,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="es">
+      <head>
+        <link rel="Arcor icon" href="/favicon.ico" type="image/x-icon" sizes='any' />
+      </head>
       <body className={lato.className}>{children}</body>
     </html>
   )
