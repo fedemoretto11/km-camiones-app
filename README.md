@@ -1,6 +1,6 @@
 🇪🇸 Español  
 
-# Contador de KM de empleados v1.0.0
+# Contador de KM de empleados v1.0.1
 ## Trabajo para Rodolfo Moretto SRL
 
 
@@ -67,7 +67,7 @@ zod: v3.23.0-canary.20231004T224911   || Biblioteca para validación de esquemas
 
 🇺🇸 English  
 
-# Kilometers Counter for Employees v1.0.0
+# Kilometers Counter for Employees v1.0.1
 ## Work for Rodolfo Moretto SRL
 
 ### Description
