@@ -49,6 +49,7 @@ return (
 
                 const fechaTimestamp: any = register.fecha;
                 const fecha = new Date(fechaTimestamp.seconds * 1000)
+                fecha.setDate(fecha.getDate() + 1)
 
                 return (
                   (

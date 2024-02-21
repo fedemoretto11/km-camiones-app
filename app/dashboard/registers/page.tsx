@@ -90,7 +90,9 @@ export default function Page() {
       </div>
       {
         totalKM !== 0 && 
-        <h3>Total KM: {totalKM}</h3>
+        <h3 className="p-2 text-3xl text-center border-2 border-blue-500 rounded-lg">Total KM del mes: {totalKM?.toLocaleString('es-AR',{
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2,})}</h3>
       }
       <TableRegisters registersData={registros}/>
     </section>

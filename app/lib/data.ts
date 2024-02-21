@@ -172,3 +172,16 @@ export async function getRegisterById(id: string | FormDataEntryValue | null) {
   }
 }
 
+// export async function getRegisterByDate(formDate: FormDataEntryValue | null) {
+//   try {
+//       if (formDate === null) return null
+
+//       console.log(formDate)
+
+
+
+//   } catch (error) {
+    
+//   }
+// }
+

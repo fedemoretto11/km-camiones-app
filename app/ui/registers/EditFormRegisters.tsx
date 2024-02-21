@@ -84,7 +84,7 @@ export default function EditFormRegisters({ register }: {register: Registro | un
         </div>
         <FechaInput 
           fecha={register?.fecha}
-          className={UNEDITABLE_INPUT}
+          // className={UNEDITABLE_INPUT}
         />
         <KmFinales value={register?.kmFinales} className={UNEDITABLE_INPUT}/>
         <Litros value={register?.litrosCargados} className={UNEDITABLE_INPUT}/>

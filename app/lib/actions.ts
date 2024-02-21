@@ -185,6 +185,7 @@ export async function createRegister(formData: FormData) {
     return 1
   }
 
+
   try {
     if (registro.vehiculo) {
       const vehicleDocRef: DocumentReference = doc(VEHICLE_COLLECTION_REF, registro.vehiculo.patente)
