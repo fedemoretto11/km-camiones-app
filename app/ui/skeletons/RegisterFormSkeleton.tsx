@@ -3,22 +3,41 @@
 import Link from "next/link";
 import { Button } from "../Button";
 import { useEffect, useState } from "react";
-import { Registro, Vehiculo } from "@/app/lib/definitions";
+import { Empleado, Registro, Vehiculo } from "@/app/lib/definitions";
+import { fetchEmployees, fetchVehicles } from "@/app/lib/data";
 import { editRegister } from "@/app/lib/actions";
-import { ChoferInput, FechaInput, VehiculoInput, KmFinales, Litros, ResumenOutput, Observaciones, TicketNumberInput } from "./inputs";
+import { ChoferInput, FechaInput, VehiculoInput, KmFinales, Litros, ResumenOutput, Observaciones, TicketNumberInput } from "../registers/inputs";
 import { UNEDITABLE_INPUT } from "@/app/lib/const";
 
 
 
-export default function EditFormRegisters({ register }: {register: Registro | undefined}){
+export default function RegisterFormSkeleton({ register }: {register: Registro | undefined}){
+
+  const [vehicles, setVehicles] = useState<Vehiculo[]>([])
+  const [employees, setEmployees] = useState<Empleado[]>([])
 
   const [vehicleSelected, setVehicleSelected] = useState<Vehiculo | undefined>(register?.vehiculo)
+
   const [hasCodriver, setHasCodriver] = useState<boolean>(false)
-  
+  const [chofer, setChofer] = useState<Empleado>()
+
 
   useEffect(() => {
-    register?.ayudante ? setHasCodriver(true) : setHasCodriver(false)
-  },[register])
+    fetchVehicles()
+      .then((data: Vehiculo[] | undefined) => {
+        setVehicles(data ?? [])
+      })
+
+    fetchEmployees()
+      .then((data: Empleado[] | undefined) => {
+        setEmployees(data ?? [])
+      })
+
+    },[])
+
+    useEffect(() => {
+      register?.ayudante ? setHasCodriver(true) : setHasCodriver(false)
+    },[register])
     
 
   return (
@@ -28,17 +47,18 @@ export default function EditFormRegisters({ register }: {register: Registro | un
         <TicketNumberInput ticket={register?.ticket} className={UNEDITABLE_INPUT}/>
         {
           register?.vehiculo &&
-            <VehiculoInput 
-              setVehicleSelected={setVehicleSelected} 
-              defaultSelectedValue={register?.vehiculo}
-            />
-
+          <VehiculoInput 
+          vehicles={vehicles} 
+          setVehicleSelected={setVehicleSelected} 
+          defaultValue={register?.vehiculo.patente}
+        />
         }
         {/* Tiene acompañante? */}
-        <div className="flex flex-1 items-center gap-6">
+        <div className="mb-4 flex flex-1 items-center gap-6">
           {
             register?.chofer && 
             <ChoferInput 
+            employees={employees} 
             name="chofer"
             defaultValue={register?.chofer ? register.chofer.dni : undefined}
           />
@@ -56,6 +76,7 @@ export default function EditFormRegisters({ register }: {register: Registro | un
           {
             hasCodriver &&
             <ChoferInput 
+              employees={employees} 
               name="codriver"
               defaultValue={register?.ayudante ? register.ayudante.dni : undefined}
             />

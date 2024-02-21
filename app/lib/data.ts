@@ -164,8 +164,10 @@ export async function getRegisterById(id: string | FormDataEntryValue | null) {
 
     const docRef: DocumentReference = doc(REGISTERS_COLLECTION_REF, idString)
     const docSnap = await getDoc(docRef)
+    
+    const data = docSnap.exists() ? docSnap.data() as Registro : null
 
-    if (docSnap.exists()) return docSnap.data()
+    return data
     
   } catch (error) {
     console.log("Error al cargar datos", error)

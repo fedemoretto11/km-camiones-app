@@ -2,11 +2,12 @@
 
 import Link from "next/link";
 import { Button } from "../Button";
-import { useEffect, useMemo, useState } from "react";
+import { Suspense, useEffect, useMemo, useState } from "react";
 import { Empleado, Vehiculo } from "@/app/lib/definitions";
 import { fetchEmployees, fetchVehicles } from "@/app/lib/data";
 import { createRegister } from "@/app/lib/actions";
 import { ChoferInput, FechaInput, VehiculoInput, KmFinales, Litros, ResumenOutput, Observaciones, TicketNumberInput } from "./inputs";
+import { LargeInputSkeleton, SmallInputSkeleton } from "../skeletons";
 
 
 
@@ -24,14 +25,6 @@ export default function AddFormRegisters(){
   const [litros, setLitros] = useState<number>()
 
   useEffect(() => {
-    fetchVehicles()
-      .then((data: Vehiculo[] | undefined) => {
-        setVehicles(data ?? [])
-      })
-      .catch((error) => {
-        console.log("Error al cargar Vehiculos: ", error)
-      })
-
     fetchEmployees()
       .then((data: Empleado[] | undefined) => {
         setEmployees(data ?? [])
@@ -63,10 +56,10 @@ export default function AddFormRegisters(){
       <div className="w-full rounded-md bg-gray-50 p-6">
 
         <TicketNumberInput />
-        <VehiculoInput vehicles={vehicles} setVehicleSelected={setVehicleSelected} defaultValue=''/>
+          <VehiculoInput setVehicleSelected={setVehicleSelected} defaultValue=''/>
         {/* Tiene acompañante? */}
-        <div className="mb-4 flex flex-1 items-center gap-6">
-          <ChoferInput employees={employees} name="chofer"/>
+        <div className="flex flex-1 items-center gap-6">
+          <ChoferInput name="chofer"/>
           <label htmlFor="hasCodriver" className="block mb-2 text-sm font-medium">Tiene acompañante</label>
           <div className="relative">
             <input 
@@ -78,7 +71,7 @@ export default function AddFormRegisters(){
           </div>
           {
             hasCodriver &&
-            <ChoferInput employees={employees} name="codriver"/>
+              <ChoferInput name="codriver"/>
           }
         </div>
         <FechaInput />

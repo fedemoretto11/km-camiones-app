@@ -1,12 +1,13 @@
 import { MONTHS, UNEDITABLE_INPUT, YEARS } from "@/app/lib/const";
+import { fetchEmployees, fetchVehicles } from "@/app/lib/data";
 import { Empleado, Vehiculo } from "@/app/lib/definitions";
 import { CalculatorIcon, CalendarDaysIcon, DocumentTextIcon, TicketIcon, TruckIcon, UserCircleIcon } from "@heroicons/react/16/solid";
 import clsx from "clsx";
-import { ChangeEvent } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 
 type VehiculoSelectionProps = {
-  vehicles: Vehiculo[];
-  setVehicleSelected: (vehicle: Vehiculo | undefined) => void;
+  setVehicleSelected?: (vehicle: Vehiculo | undefined) => void;
+  defaultSelectedValue?: Vehiculo
 } & React.SelectHTMLAttributes<HTMLSelectElement>;
 
 type EmployeeSelectionProps = {
@@ -20,7 +21,23 @@ const LABEL_STYLES = 'block w-28 text-sm font-medium'
 
 
 
-export function VehiculoInput({ vehicles, setVehicleSelected, ...rest }: VehiculoSelectionProps) {
+export async function VehiculoInput({ defaultSelectedValue, setVehicleSelected, ...rest }: VehiculoSelectionProps) {
+
+  const [vehicles, setVehicles] = useState<Vehiculo[]>([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const fetchedVehicles = await fetchVehicles();
+        setVehicles(fetchedVehicles ?? []);
+      } catch (error) {
+        console.error('Error fetching vehicles:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   return (
     <div className="mb-4 flex gap-6 items-center">
       <label htmlFor="reparto" className={LABEL_STYLES}>Reparto</label>
@@ -29,11 +46,12 @@ export function VehiculoInput({ vehicles, setVehicleSelected, ...rest }: Vehicul
           id="reparto"
           name="reparto"
           className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
-          {...rest}
+          defaultValue={defaultSelectedValue?.patente ?? ''}
           onChange={(event: ChangeEvent<HTMLSelectElement>) => {
             const selectedVehicle = vehicles.find(vehicle => vehicle.patente === event.target.value);
-            setVehicleSelected(selectedVehicle);
+            setVehicleSelected ? setVehicleSelected(selectedVehicle) : console.log("hola");
           }}
+          {...rest}
         >
           <option value="" disabled selected>
             Reparto
@@ -53,13 +71,28 @@ export function VehiculoInput({ vehicles, setVehicleSelected, ...rest }: Vehicul
           className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500"
         />
       </div>
-      
-      
     </div>
   )
 }
 
-export function ChoferInput({employees, name, className, ...rest}: { employees: Empleado[], name: string} & React.SelectHTMLAttributes<HTMLSelectElement>) {
+export async function ChoferInput({name, className, ...rest}: { name: string} & React.SelectHTMLAttributes<HTMLSelectElement>) {
+
+  const [employees, setEmployees] = useState<Empleado[]>([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const fetchedEmployees = await fetchEmployees();
+        setEmployees(fetchedEmployees || []);
+      } catch (error) {
+        console.error('Error fetching vehicles:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+
   return (
     <div className="mb-4 flex gap-6 items-center">
       <label htmlFor={name} className={LABEL_STYLES}>
@@ -229,9 +262,9 @@ export function ResumenOutput({ valor, name, label }: {valor: number | undefined
           name={name}
           type="number"
           placeholder="Seleccione un vehiculo para ver los KM" 
-          className={clsx("peer block w-full rounded-md border broder-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500", UNEDITABLE_INPUT)}
+          className={clsx("peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500", UNEDITABLE_INPUT)}
           value={valor}
-          
+          readOnly
         />
         <CalculatorIcon
           className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500"
