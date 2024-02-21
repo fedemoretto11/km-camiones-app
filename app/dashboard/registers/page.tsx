@@ -3,7 +3,6 @@
 import { fetchEmployees, fetchRegisters, fetchRegistersByQuery, getEmployeeByDni } from "@/app/lib/data";
 import { Empleado, Registro } from "@/app/lib/definitions";
 import { Button } from "@/app/ui/Button";
-import { Modal } from "@/app/ui/Modal";
 import { AddRegister } from "@/app/ui/buttons";
 import TableRegisters from "@/app/ui/registers/TableRegisters";
 import { ChoferInputOnChange, SelectMonth, SelectYear } from "@/app/ui/registers/inputs";

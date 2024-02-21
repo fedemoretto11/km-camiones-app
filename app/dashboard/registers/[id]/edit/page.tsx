@@ -23,7 +23,7 @@ export default function Page({ params }: { params: {id: string} }) {
       }
     }
     fetchEmpleado()
-  }, [params.id])
+  }, [id])
 
 
 
