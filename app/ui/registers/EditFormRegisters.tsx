@@ -40,7 +40,7 @@ export default function EditFormRegisters({ register }: {register: Registro | un
             register?.chofer && 
             <ChoferInput 
             name="chofer"
-            defaultValue={register?.chofer ? register.chofer.dni : undefined}
+            defaultValue={register?.chofer ? register.chofer.dni : ''}
           />
           }
           <label htmlFor="hasCodriver" className="block mb-2 text-sm font-medium">Tiene acompañante</label>
@@ -57,7 +57,7 @@ export default function EditFormRegisters({ register }: {register: Registro | un
             hasCodriver &&
             <ChoferInput 
               name="codriver"
-              defaultValue={register?.ayudante ? register.ayudante.dni : undefined}
+              defaultValue={register?.ayudante ? register.ayudante.dni : ''}
             />
           }
         </div>
@@ -71,9 +71,9 @@ export default function EditFormRegisters({ register }: {register: Registro | un
         <Observaciones defaultValue={register?.observaciones ? register.observaciones : ''}/>
 
         <div className="flex flex-1 flex-col w-96">
-          <ResumenOutput  valor={register?.kmIniciales} name="kmIniciales" label="KM Iniciales" />
-          <ResumenOutput  valor={register?.kmViaje} name="kmRecorridos" label="KM Recorridos" />
-          <ResumenOutput  valor={register?.consumo} name="consumo" label="Consumo cada 100 KM" />
+          <ResumenOutput  valor={register?.kmIniciales ?? ''} name="kmIniciales" label="KM Iniciales" />
+          <ResumenOutput  valor={register?.kmViaje ?? ''} name="kmRecorridos" label="KM Recorridos" />
+          <ResumenOutput  valor={register?.consumo ?? ''} name="consumo" label="Consumo cada 100 KM" />
         </div>
 
         <div className="flex mt-6 justify-end gap-4">

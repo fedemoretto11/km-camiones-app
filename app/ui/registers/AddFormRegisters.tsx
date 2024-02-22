@@ -2,19 +2,18 @@
 
 import Link from "next/link";
 import { Button } from "../Button";
-import { Suspense, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Empleado, Vehiculo } from "@/app/lib/definitions";
-import { fetchEmployees, fetchVehicles } from "@/app/lib/data";
+import { fetchEmployees } from "@/app/lib/data";
 import { createRegister } from "@/app/lib/actions";
 import { ChoferInput, FechaInput, VehiculoInput, KmFinales, Litros, ResumenOutput, Observaciones, TicketNumberInput } from "./inputs";
-import { LargeInputSkeleton, SmallInputSkeleton } from "../skeletons";
 
 
 
 export default function AddFormRegisters(){
 
-  const [vehicles, setVehicles] = useState<Vehiculo[]>([])
-  const [employees, setEmployees] = useState<Empleado[]>([])
+  // const [vehicles, setVehicles] = useState<Vehiculo[]>([])
+  // const [employees, setEmployees] = useState<Empleado[]>([])
 
   const [vehicleSelected, setVehicleSelected] = useState<Vehiculo>()
 
@@ -24,15 +23,15 @@ export default function AddFormRegisters(){
   const [kmRecorridos, setKmRecorridos] = useState<number>()
   const [litros, setLitros] = useState<number>()
 
-  useEffect(() => {
-    fetchEmployees()
-      .then((data: Empleado[] | undefined) => {
-        setEmployees(data ?? [])
-      })
-      .catch((error) => {
-        console.log("Error al cargar Empleados: ", error)
-      })
-  },[])
+  // useEffect(() => {
+  //   fetchEmployees()
+  //     .then((data: Empleado[] | undefined) => {
+  //       setEmployees(data ?? [])
+  //     })
+  //     .catch((error) => {
+  //       console.log("Error al cargar Empleados: ", error)
+  //     })
+  // },[])
 
   useEffect(() => {
     if (kmTicket && vehicleSelected) {
@@ -56,10 +55,10 @@ export default function AddFormRegisters(){
       <div className="w-full rounded-md bg-gray-50 p-6">
 
         <TicketNumberInput />
-          <VehiculoInput setVehicleSelected={setVehicleSelected} defaultValue=''/>
+        <VehiculoInput setVehicleSelected={setVehicleSelected} defaultValue=''/>
         {/* Tiene acompañante? */}
         <div className="flex flex-1 items-center gap-6">
-          <ChoferInput name="chofer"/>
+          <ChoferInput name="chofer" defaultValue=''/>
           <label htmlFor="hasCodriver" className="block mb-2 text-sm font-medium">Tiene acompañante</label>
           <div className="relative">
             <input 
@@ -71,7 +70,7 @@ export default function AddFormRegisters(){
           </div>
           {
             hasCodriver &&
-              <ChoferInput name="codriver"/>
+              <ChoferInput name="codriver" defaultValue=''/>
           }
         </div>
         <FechaInput />
@@ -81,9 +80,9 @@ export default function AddFormRegisters(){
         <Observaciones />
 
         <div className="flex flex-1 flex-col w-96">
-          <ResumenOutput  valor={vehicleSelected?.kmTotales} name="kmIniciales" label="KM Iniciales" />
-          <ResumenOutput  valor={kmRecorridos} name="kmRecorridos" label="KM Recorridos" />
-          <ResumenOutput  valor={consumo} name="consumo" label="Consumo cada 100 KM" />
+          <ResumenOutput  valor={vehicleSelected?.kmTotales ?? ''} name="kmIniciales" label="KM Iniciales" />
+          <ResumenOutput  valor={kmRecorridos ?? ''} name="kmRecorridos" label="KM Recorridos" />
+          <ResumenOutput  valor={consumo ?? ''} name="consumo" label="Consumo cada 100 KM" />
         </div>
 
         <div className="flex mt-6 justify-end gap-4">

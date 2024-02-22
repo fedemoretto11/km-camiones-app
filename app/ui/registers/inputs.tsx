@@ -21,7 +21,7 @@ const LABEL_STYLES = 'block w-28 text-sm font-medium'
 
 
 
-export async function VehiculoInput({ defaultSelectedValue, setVehicleSelected, ...rest }: VehiculoSelectionProps) {
+export function VehiculoInput({ defaultSelectedValue, setVehicleSelected, ...rest }: VehiculoSelectionProps) {
 
   const [vehicles, setVehicles] = useState<Vehiculo[]>([]);
 
@@ -33,7 +33,7 @@ export async function VehiculoInput({ defaultSelectedValue, setVehicleSelected, 
       } catch (error) {
         console.error('Error fetching vehicles:', error);
       }
-    };
+    };  
 
     fetchData();
   }, []);
@@ -48,12 +48,13 @@ export async function VehiculoInput({ defaultSelectedValue, setVehicleSelected, 
           className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
           defaultValue={defaultSelectedValue?.patente ?? ''}
           onChange={(event: ChangeEvent<HTMLSelectElement>) => {
+            event.preventDefault()
             const selectedVehicle = vehicles.find(vehicle => vehicle.patente === event.target.value);
-            setVehicleSelected ? setVehicleSelected(selectedVehicle) : console.log("hola");
+            setVehicleSelected ? setVehicleSelected(selectedVehicle) : console.log("No hay setter");
           }}
           {...rest}
         >
-          <option value="" disabled selected>
+          <option value='' disabled>
             Reparto
           </option>
           {
@@ -75,7 +76,7 @@ export async function VehiculoInput({ defaultSelectedValue, setVehicleSelected, 
   )
 }
 
-export async function ChoferInput({name, className, ...rest}: { name: string} & React.SelectHTMLAttributes<HTMLSelectElement>) {
+export function ChoferInput({name, className, ...rest}: { name: string} & React.SelectHTMLAttributes<HTMLSelectElement>) {
 
   const [employees, setEmployees] = useState<Empleado[]>([]);
 
@@ -105,7 +106,7 @@ export async function ChoferInput({name, className, ...rest}: { name: string} & 
         className={clsx("peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500", className)}
         {...rest}
       >
-        <option value="" disabled selected>
+        <option value="" disabled>
           {name == 'chofer' ? "Chofer" : "Acompañante"}
         </option>
         {
@@ -252,7 +253,7 @@ export function Litros({setLitros, className, ...rest}: {setLitros?: (value: num
   )
 }
 
-export function ResumenOutput({ valor, name, label }: {valor: number | undefined, name: string, label: string}) {
+export function ResumenOutput({ valor, name, label }: {valor: number | string, name: string, label: string}) {
   return (
     <div className="mb-4 flex items-center justify-between gap-2">
       <label htmlFor={name} className={LABEL_STYLES}>{label}</label>
